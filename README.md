@@ -283,9 +283,8 @@ kubectl -n microservice get pod
 ```
 
 13. Network Policy
-- 
-```
-```
+- 향후 지원 예정
+
 
 14. Pod Security Group
 - microservice namespace에 배포된 Redis (redis-cart deployment)를 Elasticache Redis 로 변경 작업을 하면서, Redis 와 통신을 하는 Pod(cartservice)에 Pod Security Group 를 적용합니다. 먼저 Elasticache Redis 생성을 위해서 Security Group 생성 작업을 합니다.
@@ -344,7 +343,7 @@ kubectl -n kube-system set env daemonset aws-node ENABLE_POD_ENI=true
 kubectl -n kube-system rollout status ds aws-node
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181587870-5a9026a5-985f-4e99-b968-022dfb246272.png)
-- 
+- cartservice Deployment (Pod)에 Security Group Policy 적용을 위한 yaml 파일을 생성합니다.
 ```
 cat << EoF > ~/environment/Amazon-EKS-Security/sg-policy.yaml
 apiVersion: vpcresources.k8s.aws/v1beta1
@@ -361,27 +360,29 @@ spec:
 EoF
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181588024-c52a7ae2-43bc-4e26-a517-61325a2fd03f.png)
-
-
-- 
+- Security Group Policy 를 적용하고, 정상적으로 적용이 되었는지 확인을 합니다.
 ```
 kubectl -n microservice apply -f sg-policy.yaml
 
 kubectl -n microservice describe securitygrouppolicy
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181588226-7a724ae3-3c13-4fdc-a594-451b4cf46ec0.png)
-
-
-- 
+- Elasticache Redis Endpoint 정보를 cartservice-podsg.yaml 에 입력을 하고, cartservice deployment 의 Redis 설정을 redis-cart pod 에서 Elasticache Redis 로 설정 변경을 합니다. 변경 이후에 redis-cart deployment 를 삭제합니다.
 ```
 REDIS_ADDRESS=$(aws elasticache describe-cache-clusters --show-cache-node-info | jq -r '.CacheClusters[].CacheNodes[].Endpoint.Address')
 
 sed -i s%CHANGEME%$REDIS_ADDRESS:6379% cartservice-podsg.yaml 
 
 kubectl -n microservice apply -f cartservice-podsg.yaml 
+
+kubectl -n microservice delete deploy redis-cart
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181592097-a0f6fbd4-c3f0-4dbc-8da2-cde08a8fa385.png)
-
+- microservice LoadBalancer 주소로 들어가서 정상적으로 서비스가 되고 있는지 확인합니다.
+```
+kubectl -n microservice get svc frontend-external
+```
+![image](https://user-images.githubusercontent.com/25558369/181650827-ff30b99c-f3b7-4bb7-898b-208940056640.png)
 
 
 15. 자원 삭제

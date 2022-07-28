@@ -70,12 +70,11 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 ![image](https://user-images.githubusercontent.com/25558369/181411945-ceef8e81-b9f5-4cf3-98e9-0ed714c0b7da.png)
 - 생성된 security-workshop EKS Cluster를 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181412406-d0f05d59-d2ea-47b9-97bf-a2fb2c3799e1.png)
-
-- 하단 탭에서 Networking를 선택하고, 오른쪽에 "Manage networking" 버튼을 선택합니다.
+- 외부에서 Amazon EKS에 접근하는 곳을 제한하는 설정을 합니다. Cloud9에서만 접근 가능하게 할 것 입니다. 하단 탭에서 Networking를 선택하고, 오른쪽에 "Manage networking" 버튼을 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181412588-a192954d-fc46-4265-884a-c8e6db953710.png)
-
+- "Advanced settings" 를 선택하여, CIDR block에 Cloud9 의 Public IP 정보를 입력합니다. 그리고 "Save changes" 버튼을 선택합니다. Cloud9의 Public IP는 EC2 Console에서 확인할 수 있습니다. 만약 Cloud9의 Public IP가 바뀌면, 바뀐 IP로 정보를 바꿔주시기 바랍니다.
 ![image](https://user-images.githubusercontent.com/25558369/181412825-3222581e-7d9d-4ad2-928e-39ebc6e6107e.png)
-
+- Cluster name 에 "security-workshop" 를 입력하고 Confirm 버튼을 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181413323-bbf88184-b8c0-4838-9f42-e9c791198417.png)
 
 

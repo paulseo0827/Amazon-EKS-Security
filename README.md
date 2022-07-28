@@ -215,11 +215,14 @@ cd ~/environment/Amazon-EKS-Security/
 ./3_polaris.sh
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181437996-66489695-29d6-49c5-8e59-3e500a524d66.png)
-
-
+- Polaris 에 LoadBalancer 정보를 조회해서, 그 URL로 접속을 하면 아래 캡처화면과 같은 사이트에 접속할 수 있습니다.
 ```
+kubectl -n polaris get svc
 ```
-
+![image](https://user-images.githubusercontent.com/25558369/181451540-97dc741d-4f99-40de-a6e7-67fad74b1cc4.png)
+- 하단에 microservice namespace에 cartservice 내용을 확인해봅니다. 
+![image](https://user-images.githubusercontent.com/25558369/181452008-66f7d628-50df-4c32-9cd7-aa2ce3323e94.png)
+- X로 표시되어 있는 부분을 체크표시로 되게 설정을 적용해보겠습니다.
 
 ```
 ```

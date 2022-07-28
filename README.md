@@ -377,13 +377,14 @@ kubectl -n microservice describe securitygrouppolicy
 
 - 
 ```
-REDIS_ADDRESS=$(aws elasticache describe-cache-clusters | jq -r '.CacheClusters[].ARN')
+REDIS_ADDRESS=$(aws elasticache describe-cache-clusters --show-cache-node-info | jq -r '.CacheClusters[].CacheNodes[].Endpoint.Address')
 
-sed -i s%CHANGEME%$REDIS_ADDRESS% cartservice-podsg.yaml 
+sed -i s%CHANGEME%$REDIS_ADDRESS:6379% cartservice-podsg.yaml 
 
 kubectl -n microservice apply -f cartservice-podsg.yaml 
 ```
-![image](https://user-images.githubusercontent.com/25558369/181590298-76075371-c263-4449-bea8-b8b0da845c27.png)
+![image](https://user-images.githubusercontent.com/25558369/181592097-a0f6fbd4-c3f0-4dbc-8da2-cde08a8fa385.png)
+
 
 
 15. 자원 삭제

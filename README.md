@@ -132,9 +132,14 @@ aws ecr put-registry-scanning-configuration --scan-type ENHANCED
 aws ecr get-registry-scanning-configuration
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181418801-55b56737-5121-4d4f-ae5a-30a0bf3190f1.png)
-- 
+- 기존 ECR repository 를 지우고, 다시 생성하여 spring4shell 이미지를 올립니다. 
 ```
+aws ecr delete-repository --repository-name spring4shell --force
+aws ecr create-repository --repository-name spring4shell --image-scanning-configuration scanOnPush=true
+docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 ```
+![image](https://user-images.githubusercontent.com/25558369/181419573-e991972d-ce7c-4698-8a00-5686bf2c8934.png)
+
 - 
 ```
 ```

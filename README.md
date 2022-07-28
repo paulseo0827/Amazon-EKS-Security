@@ -94,8 +94,7 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 ![image](https://user-images.githubusercontent.com/25558369/181414387-44339fbb-6ed8-42e0-9ff9-072e046046bb.png)
 
 6. Amazon ECR Scan 기능 테스트
-
-- ㅇ
+- AWS에서 제공하는 Container Image scan 기능을 알아보도록 하겠습니다. 예제로는 2022년 3월말 Spring 프레임워크 취약점을 가지고 확인해보겠습니다. (https://www.ahnlab.com/kr/site/securityinfo/asec/asecView.do?groupLevel=001&groupCode=VNI002&seq=31635)
 ```
 cd ~/environment
 git clone https://github.com/paulseo0827/Spring4Shell-POC.git
@@ -116,7 +115,7 @@ aws ecr create-repository --repository-name spring4shell --image-scanning-config
 aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com 
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181416263-04992e8e-42ab-479f-a9b0-83a63a544185.png)
-- 빌드한 spring4shell 이미지를 ECR로 올립니다.
+- 빌드한 spring4shell 이미지를 ECR로 푸쉬니다.
 ```
 docker tag spring4shell:latest $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
@@ -124,7 +123,8 @@ docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 ![image](https://user-images.githubusercontent.com/25558369/181416577-b7f41d60-0e64-40b2-ac14-63bb948a4418.png)
 - Amazon ECR Console(AWS Console에 Services에서 Elastic Container Registry 를 선택합니다.)에 spring4shell repository 로 들어가서, Vulnerabilities 항목을 확인해봅니다. 
 ![image](https://user-images.githubusercontent.com/25558369/181416840-133f34ba-f824-4389-989d-23320b6c2cb3.png)
-- 
+- 현재 결과에는 Critical이 3개, High가 12개 나왔고, 결과에 cve-2022-22965(https://nvd.nist.gov/vuln/detail/cve-2022-22965) 를 찾을 수 없습니다.
+![image](https://user-images.githubusercontent.com/25558369/181418071-b666e95b-0c82-4e53-9636-8b1a327bb2e8.png)
 
 
 

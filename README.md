@@ -103,14 +103,13 @@ cd Spring4Shell-POC
 docker build --tag spring4shell:latest .
 docker images
 ```
+![image](https://user-images.githubusercontent.com/25558369/181415431-9367daf4-dfa4-46cd-affd-77a413f18843.png)
 - 첫번째로, Amazon ECR에서 제공하는 Basic scanning 기능을 확인해봅니다. 아래 명령어로 Scan 설정이 Basic인지, 만약 Enhanced 이면 Basic으로 설정을 변경합니다.
 ```
 aws ecr get-registry-scanning-configuration
 aws ecr put-registry-scanning-configuration --scan-type BASIC
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181417712-838b4d33-b062-4cf4-9f3f-af0d97bcea45.png)
-
-![image](https://user-images.githubusercontent.com/25558369/181415431-9367daf4-dfa4-46cd-affd-77a413f18843.png)
 - 위에 빌드한 이미지를 ECR에 저장하기 위해서 repository 를 생성하고, ECR login를 합니다.
 ```
 aws ecr create-repository --repository-name spring4shell --image-scanning-configuration scanOnPush=true

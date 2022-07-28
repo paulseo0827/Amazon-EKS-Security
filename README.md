@@ -248,7 +248,10 @@ kubectl -n microservice get pod
 ```
 ```
 
-
+12. 자원 삭제
+- 
+```
+```
 
 
 

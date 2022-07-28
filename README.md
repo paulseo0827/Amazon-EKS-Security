@@ -319,10 +319,11 @@ aws ec2 authorize-security-group-ingress --group-id ${NODE_GROUP_SG} --protocol 
 
 aws ec2 authorize-security-group-ingress --group-id ${REDIS_SG} --protocol tcp --port 6379 --source-group ${POD_SG}
 
-aws ec2 authorize-security-group-ingress --group-id ${POD_SG} --protocol tcp --port 7070 --cidr '0.0.0.0/0'
+aws ec2 authorize-security-group-ingress --group-id ${POD_SG} --protocol tcp --port 7070 --cidr '192.168.0.0/8'
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181586161-40ec1f0f-58fc-47c1-9922-b26691cf06bc.png)
-![image](https://user-images.githubusercontent.com/25558369/181596192-b5b0496d-3581-4a61-8c74-5facc0e6aee7.png)
+![image](https://user-images.githubusercontent.com/25558369/181648268-9e7664dd-220d-45ae-9fd4-c8766a523755.png)
+
 
 
 - 

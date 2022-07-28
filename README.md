@@ -61,10 +61,10 @@ eksctl create cluster -f eks-security-workshop.yaml
 
 ![image](https://user-images.githubusercontent.com/25558369/181402980-542d957c-5f13-479d-9c62-8b668b80288f.png)
 
-5. 
-
+5. Amazon GuardDuty 기능 활성화
+- AWS Console의 Services에서 guardduty를 입력하고, 하단에 GuardDuty를 선택한다.
 ![image](https://user-images.githubusercontent.com/25558369/181403056-c46c7afb-aaa8-442f-a492-61284be3a2c3.png)
-
+- 
 ![image](https://user-images.githubusercontent.com/25558369/181403093-9e4a6c3f-9a51-4ece-af45-1f110cfe553f.png)
 
 ![image](https://user-images.githubusercontent.com/25558369/181403145-26339e62-e5d8-4da4-a0c3-2e43eb4e67d7.png)

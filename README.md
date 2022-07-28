@@ -292,6 +292,8 @@ kubectl -n microservice get pod
 
 - 
 ```
+cd ~/environment/Amazon-EKS-Security/
+
 export VPC_ID=$(aws eks describe-cluster --name security-workshop --query "cluster.resourcesVpcConfig.vpcId" --output text)
 
 aws ec2 create-security-group --description 'Elasticache Redis SG' --group-name 'Elasticache_Redis_SG' --vpc-id ${VPC_ID}
@@ -375,7 +377,13 @@ kubectl -n microservice describe securitygrouppolicy
 
 - 
 ```
+REDIS_ADDRESS=$(aws elasticache describe-cache-clusters | jq -r '.CacheClusters[].ARN')
+
+sed -i s%CHANGEME%$REDIS_ADDRESS% cartservice-podsg.yaml 
+
+kubectl -n microservice apply -f cartservice-podsg.yaml 
 ```
+![image](https://user-images.githubusercontent.com/25558369/181590298-76075371-c263-4449-bea8-b8b0da845c27.png)
 
 
 15. 자원 삭제

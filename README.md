@@ -49,7 +49,7 @@ cd Amazon-EKS-Security
 
 
 3. Amazon EKS Cluster 생성
-- eksctl 툴을 이용해서 Amzon EKS Cluster (Control Plane + Date Plane)를 생성한다.
+- eksctl 툴을 이용해서 Amzon EKS Cluster (Control Plane + Date Plane)를 생성한다. 해당 작업은 약 20~30분정도 소요됩니다.
 ```
 eksctl create cluster -f eks-security-workshop.yaml
 ```

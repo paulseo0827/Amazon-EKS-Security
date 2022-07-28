@@ -65,6 +65,7 @@ kubectl get node
 - 실습을 위해서 Worker Node의 IAM Role에 S3FullAccess IAM Policy를 붙입니다.
 ```
 ROLE_NAME=$(aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role)
+
 aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
 ```
 - AWS Console의 Services에서 eks 입력하고, 하단에 Elastic Kuberntes Service를 선택합니다.
@@ -102,36 +103,43 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 - Spring 프레임워크 취약점을 테스트를 위해서 해당 git repo를 가져옵니다.
 ```
 cd ~/environment
+
 git clone https://github.com/paulseo0827/Spring4Shell-POC.git
+
 cd Spring4Shell-POC
 ```
 - Lint 툴(https://github.com/hadolint/hadolint)를 이용하여 Dockerfile를 최적화를 합니다. ADD 부분을 COPY로, apt를 apt-get 으로 수정합니다.
 ```
 hadolint Dockerfile 
+
 vi Dockerfile
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181462509-8a9ea72a-0df6-4674-a9e2-9dead0c4b844.png)
 - Spring 프레임워크 취약점을 가진 이미지를 빌드합니다.
 ```
 docker build --tag spring4shell:latest .
+
 docker images
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181415431-9367daf4-dfa4-46cd-affd-77a413f18843.png)
 - 첫번째로, Amazon ECR에서 제공하는 Basic scanning 기능을 확인해봅니다. 아래 명령어로 Scan 설정이 Basic인지, 만약 Enhanced 이면 Basic으로 설정을 변경합니다.
 ```
 aws ecr get-registry-scanning-configuration
+
 aws ecr put-registry-scanning-configuration --scan-type BASIC
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181417712-838b4d33-b062-4cf4-9f3f-af0d97bcea45.png)
 - 위에 빌드한 이미지를 ECR에 저장하기 위해서 repository 를 생성하고, ECR login를 합니다.
 ```
 aws ecr create-repository --repository-name spring4shell --image-scanning-configuration scanOnPush=true
+
 aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com 
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181416263-04992e8e-42ab-479f-a9b0-83a63a544185.png)
 - 빌드한 spring4shell 이미지를 ECR로 푸쉬니다.
 ```
 docker tag spring4shell:latest $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
+
 docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181416577-b7f41d60-0e64-40b2-ac14-63bb948a4418.png)
@@ -142,13 +150,16 @@ docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 - 두번째로, Amazon ECR에서 제공하는 Enhanced scanning 기능을 확인해봅니다. Enhanced scanning 설정은 Inspector를 이용하여 결과를 확인할 수 있습니다.
 ```
 aws ecr put-registry-scanning-configuration --scan-type ENHANCED
+
 aws ecr get-registry-scanning-configuration
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181418801-55b56737-5121-4d4f-ae5a-30a0bf3190f1.png)
 - 기존 ECR repository 를 지우고, 다시 생성하여 spring4shell 이미지를 올립니다. 
 ```
 aws ecr delete-repository --repository-name spring4shell --force
+
 aws ecr create-repository --repository-name spring4shell --image-scanning-configuration scanOnPush=true
+
 docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181419573-e991972d-ce7c-4698-8a00-5686bf2c8934.png)
@@ -162,8 +173,11 @@ docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 - GuardDuty를 이용하여 EKS Audit Log를 기준으로 권한이나 보안 관련 문제들을 쉽게 찾을 수 있습니다.
 ```
 cd ~/environment/Amazon-EKS-Security/
+
 ./2_guardduty.sh 
+
 kubectl get pods --kubeconfig guardduty/anonymous-kubeconfig
+
 Username는 testuser 를 입력
 Password는 testpasswd 를 입력
 ```
@@ -180,28 +194,36 @@ https://docs.aws.amazon.com/ko_kr/guardduty/latest/ug/guardduty_finding-types-ku
 - EC2를 생성할 때, 기본적으로 EC2 Instance Metadata Service(IMDS)를 v1 와 v2를 같이 상요할 수 있게 설정이 됩니다. EC2에서 curl명령어로 Instance Metadata에 접근이 가능하다면, Container가 올라가 있는 Pod에서도 접근이 가능합니다. 이 부분을 IMDSv2로 설정할 수 있는 실습을 하겠습니다. 우선 kube-system에 있는 restricted-namespace-pod pod에서 metadata 에 접근해서 IAM Role의 credentials(AccessKey, SecretAccessKey, Token) 정보를 가져오는 것을 확인합니다.
 ```
 aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role
+
 kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
+
 curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-security-workshop-nodegrou-NodeInstanceRole-QBU9FVSOHZEQ
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181430433-7d538392-9612-4aec-a504-cde343b63b85.png)
 - IMDS에 접근하는 설정을 v2로 하기 위해서, 인스턴스 리스트 확인과 각 인스턴스에 HttpTokens 설정이 optional(v1 or v2 동시 사용가능) 인 것을 확인합니다.
 ```
 aws ec2 describe-instances | jq -r '.Reservations[].Instances[].InstanceId'
+
 aws ec2 describe-instances --instance-ids i-0eace57965836216d | jq -r '.Reservations[].Instances[].MetadataOptions'
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181432810-01c23a01-461e-45ba-9969-de8bd1dd71e9.png)
 - 각각 인스턴스의 HttoTokens 정보를 required (IDMSv2)로 변경을 합니다.
 ```
 aws ec2 modify-instance-metadata-options --instance-id i-0eace57965836216d --http-tokens required --http-endpoint enabled
+
 aws ec2 modify-instance-metadata-options --instance-id i-0e2b6b09c4343b45e --http-tokens required --http-endpoint enabled
+
 aws ec2 modify-instance-metadata-options --instance-id i-0b8e95d29144ac592 --http-tokens required --http-endpoint enabled
+
 aws ec2 modify-instance-metadata-options --instance-id i-07df9bf65fe7a8200 --http-tokens required --http-endpoint enabled 
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181433223-fb4c6c11-6e5a-449f-853f-5f6c7bae1d9c.png)
 - 변경 후, kube-system의 restricted-namespace-pod pod에 접속하여, metadata 호출이 안되는지 확인을 합니다.
 ```
 aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role
+
 kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
+
 curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-security-workshop-nodegrou-NodeInstanceRole-QBU9FVSOHZEQ
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181433529-14e71fdb-a675-4df4-b7c3-e80de6addb3e.png)
@@ -214,13 +236,16 @@ https://docs.aws.amazon.com/config/latest/developerguide/ec2-imdsv2-check.html
 - Microservice 어플리케이션 배포를 한다.
 ```
 cd ~/environment/Amazon-EKS-Security/
+
 ./4_microservice.sh
+
 kubectl -n microservice get pod,svc
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181448318-ae0d4338-698a-432c-a091-10fbde18e995.png)
 - 
 ```
 cd ~/environment/Amazon-EKS-Security/
+
 ./3_polaris.sh
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181437996-66489695-29d6-49c5-8e59-3e500a524d66.png)
@@ -234,7 +259,9 @@ kubectl -n polaris get svc
 - X로 표시되어 있는 부분을 체크표시로 되게 설정을 적용해보겠습니다.
 ```
 cd ~/environment/Amazon-EKS-Security/
+
 kubectl -n microservice apply -f cartservice.yaml 
+
 kubectl -n microservice get pod
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181457420-8f5e6688-69d3-42fe-b4f7-92a4c785fe2e.png)
@@ -303,6 +330,7 @@ aws ec2 authorize-security-group-ingress --group-id ${REDIS_SG} --protocol tcp -
 
 ```
 export PRIVATE_SUBNETS_ID=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" "Name=tag:Name,Values=eksctl-security-workshop-cluster/SubnetPrivate*" --query 'Subnets[*].SubnetId' --output json | jq -c .)
+
 aws elasticache create-cache-subnet-group --cache-subnet-group-name rediscart --cache-subnet-group-description "rediscart" --subnet-ids ${PRIVATE_SUBNETS_ID}
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181586785-39553616-8949-40ee-93c8-e882918717bf.png)

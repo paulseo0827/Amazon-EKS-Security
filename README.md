@@ -166,8 +166,8 @@ https://catalog.workshops.aws/guardduty/en-US/module11/mod11-2-remediation
 https://docs.aws.amazon.com/ko_kr/guardduty/latest/ug/guardduty_finding-types-kubernetes.html
 
 
-8. 
-- 
+8. Instance metadata 설정
+- EC2를 생성할 때, 기본적으로 IMDSv1 와 v2를 같이 상요할 수 있게 설정이 됩니다. EC2에서 metadata에 접근이 가능하다면, Container가 올라가 있는 Pod에서도 접근이 가능합니다. 이 부분을 IDMSv2로 설정할 수 있는 실습을 하겠습니다. 우선 kube-system에 있는 pod에서 metadata 에 접근해서 IAM Role의 credentials(Access, Secret, Token) 정보를 가져오는 것을 확인합니다.
 ```
 aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role
 kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh

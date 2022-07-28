@@ -41,6 +41,11 @@ git clone https://github.com/paulseo0827/Amazon-EKS-Security.git
 cd Amazon-EKS-Security
 ./0_install.sh 
 ```
+- Cloud9의 디스크 사이즈를 50G로 증설한다.
+```
+./1_disk_resize.sh
+```
+![image](https://user-images.githubusercontent.com/25558369/181401440-f0a407bc-5a51-41a7-94b5-07ae172797c1.png)
 
 
 3. 

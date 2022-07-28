@@ -77,13 +77,7 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 - Cluster name 에 "security-workshop" 를 입력하고 Confirm 버튼을 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181413323-bbf88184-b8c0-4838-9f42-e9c791198417.png)
 
-
-4. 
-![image](https://user-images.githubusercontent.com/25558369/181402927-a8f85278-122e-4c91-a8af-cb86fba8b5d8.png)
-
-![image](https://user-images.githubusercontent.com/25558369/181402980-542d957c-5f13-479d-9c62-8b668b80288f.png)
-
-5. Amazon GuardDuty 기능 활성화
+4. Amazon GuardDuty 기능 활성화
 - AWS Console의 Services에서 guardduty를 입력하고, 하단에 GuardDuty를 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181403056-c46c7afb-aaa8-442f-a492-61284be3a2c3.png)
 - "Get Started" 버튼을 선택합니.
@@ -91,6 +85,8 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 - "Enable GuardDuty" 버튼을 선택해서, GuardDuty 기능을 활성화 합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181403145-26339e62-e5d8-4da4-a0c3-2e43eb4e67d7.png)
 
+
+5. 
 
 6. 
 

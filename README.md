@@ -164,6 +164,9 @@ Password는 testpasswd 를 입력
 
 https://catalog.workshops.aws/guardduty/en-US/module11/mod11-2-remediation
 
+https://docs.aws.amazon.com/ko_kr/guardduty/latest/ug/guardduty_finding-types-kubernetes.html
+
+
 8. 
 
 

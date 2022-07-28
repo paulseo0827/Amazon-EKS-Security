@@ -262,10 +262,7 @@ kubectl -n microservice get pod
 
 14. Pod Security Group
 - 
-```
-export VPC_ID=$(aws eks describe-cluster --name security-workshop --query "cluster.resourcesVpcConfig.vpcId" --output text)
 
-```
 - 
 ```
 export VPC_ID=$(aws eks describe-cluster --name security-workshop --query "cluster.resourcesVpcConfig.vpcId" --output text)
@@ -308,6 +305,7 @@ aws ec2 authorize-security-group-ingress --group-id ${REDIS_SG} --protocol tcp -
 export PRIVATE_SUBNETS_ID=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" "Name=tag:Name,Values=eksctl-security-workshop-cluster/SubnetPrivate*" --query 'Subnets[*].SubnetId' --output json | jq -c .)
 aws elasticache create-cache-subnet-group --cache-subnet-group-name rediscart --cache-subnet-group-description "rediscart" --subnet-ids ${PRIVATE_SUBNETS_ID}
 ```
+![image](https://user-images.githubusercontent.com/25558369/181586785-39553616-8949-40ee-93c8-e882918717bf.png)
 ![image](https://user-images.githubusercontent.com/25558369/181585190-fe20e547-d5f3-4fc5-9fa5-6eda7bc381d3.png)
 
 

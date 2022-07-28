@@ -266,6 +266,59 @@ kubectl -n microservice get pod
 export VPC_ID=$(aws eks describe-cluster --name security-workshop --query "cluster.resourcesVpcConfig.vpcId" --output text)
 
 ```
+- 
+```
+export VPC_ID=$(aws eks describe-cluster --name security-workshop --query "cluster.resourcesVpcConfig.vpcId" --output text)
+
+aws ec2 create-security-group --description 'Elasticache Redis SG' --group-name 'Elasticache_Redis_SG' --vpc-id ${VPC_ID}
+
+export REDIS_SG=$(aws ec2 describe-security-groups --filters Name=group-name,Values=Elasticache_Redis_SG Name=vpc-id,Values=${VPC_ID} --query "SecurityGroups[0].GroupId" --output text)
+
+aws ec2 create-security-group --description 'Cartservice Pod SG' --group-name 'Cartservice_Pod_SG' --vpc-id ${VPC_ID}
+
+export POD_SG=$(aws ec2 describe-security-groups --filters Name=group-name,Values=Cartservice_Pod_SG Name=vpc-id,Values=${VPC_ID} --query "SecurityGroups[0].GroupId" --output text)
+
+export NODE_GROUP_SG=$(aws ec2 describe-security-groups --filters Name=tag:Name,Values=eks-cluster-sg-security-workshop-* Name=vpc-id,Values=${VPC_ID} --query "SecurityGroups[0].GroupId" --output text)
+
+```
+![image](https://user-images.githubusercontent.com/25558369/181585633-da845a69-f8dc-4917-b229-21524e5e2657.png)
+![image](https://user-images.githubusercontent.com/25558369/181586009-d2c26f4a-45b4-4582-9acf-8113287e8714.png)
+![image](https://user-images.githubusercontent.com/25558369/181586066-88e62a6a-8056-47bb-ba99-fa438f4c0055.png)
+
+- 
+```
+aws ec2 authorize-security-group-ingress --group-id ${NODE_GROUP_SG} --protocol tcp --port 53 --source-group ${POD_SG}
+
+aws ec2 authorize-security-group-ingress --group-id ${NODE_GROUP_SG} --protocol udp --port 53 --source-group ${POD_SG}
+
+aws ec2 authorize-security-group-ingress --group-id ${REDIS_SG} --protocol tcp --port 6379 --source-group ${POD_SG}
+```
+![image](https://user-images.githubusercontent.com/25558369/181586161-40ec1f0f-58fc-47c1-9922-b26691cf06bc.png)
+
+
+
+
+
+
+
+
+
+
+```
+export PRIVATE_SUBNETS_ID=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" "Name=tag:Name,Values=eksctl-security-workshop-cluster/SubnetPrivate*" --query 'Subnets[*].SubnetId' --output json | jq -c .)
+aws elasticache create-cache-subnet-group --cache-subnet-group-name rediscart --cache-subnet-group-description "rediscart" --subnet-ids ${PRIVATE_SUBNETS_ID}
+```
+![image](https://user-images.githubusercontent.com/25558369/181585190-fe20e547-d5f3-4fc5-9fa5-6eda7bc381d3.png)
+
+
+```
+aws elasticache create-cache-cluster --cache-cluster-id redis-cart --cache-node-type cache.r5.large --engine redis --num-cache-nodes 1 --cache-parameter-group default.redis6.x --cache-subnet-group-name rediscart --security-group-ids ${REDIS_SG}
+```
+![image](https://user-images.githubusercontent.com/25558369/181584985-547407a6-e133-4677-8b13-a86ed6bb3c80.png)
+
+
+
+
 
 15. 자원 삭제
 - 

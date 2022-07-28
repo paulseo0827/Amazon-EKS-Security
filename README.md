@@ -51,7 +51,11 @@ cd Amazon-EKS-Security
 3. Amazon EKS Cluster 생성
 - eksctl 툴을 이용해서 Amzon EKS Cluster (Control Plane + Date Plane)를 생성한다.
 ```
-
+eksctl create cluster -f eks-security-workshop.yaml
 ```
+![image](https://user-images.githubusercontent.com/25558369/181402293-73dfdc44-b5b7-4ea0-ad5c-e6f28626718e.png)
+
 
 4. 
+
+5. 

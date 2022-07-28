@@ -167,14 +167,14 @@ https://docs.aws.amazon.com/ko_kr/guardduty/latest/ug/guardduty_finding-types-ku
 
 
 8. Instance metadata 설정
-- EC2를 생성할 때, 기본적으로 IMDSv1 와 v2를 같이 상요할 수 있게 설정이 됩니다. EC2에서 metadata에 접근이 가능하다면, Container가 올라가 있는 Pod에서도 접근이 가능합니다. 이 부분을 IDMSv2로 설정할 수 있는 실습을 하겠습니다. 우선 kube-system에 있는 pod에서 metadata 에 접근해서 IAM Role의 credentials(AccessKey, SecretAccessKey, Token) 정보를 가져오는 것을 확인합니다.
+- EC2를 생성할 때, 기본적으로 EC2 Instance Metadata Service(IMDS)를 v1 와 v2를 같이 상요할 수 있게 설정이 됩니다. EC2에서 curl명령어로 Instance Metadata에 접근이 가능하다면, Container가 올라가 있는 Pod에서도 접근이 가능합니다. 이 부분을 IMDSv2로 설정할 수 있는 실습을 하겠습니다. 우선 kube-system에 있는 restricted-namespace-pod pod에서 metadata 에 접근해서 IAM Role의 credentials(AccessKey, SecretAccessKey, Token) 정보를 가져오는 것을 확인합니다.
 ```
 aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role
 kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
 curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-security-workshop-nodegrou-NodeInstanceRole-QBU9FVSOHZEQ
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181430433-7d538392-9612-4aec-a504-cde343b63b85.png)
-- metadata에 접근하는 설정을 IMDSv2로 하기 위해서, 인스턴스 리스트와 각 인스턴스에 HttpTokens 정보가 optional 인 것을 확인합니다.
+- IMDS에 접근하는 설정을 v2로 하기 위해서, 인스턴스 리스트 확인과 각 인스턴스에 HttpTokens 설정이 optional(v1 or v2 동시 사용가능) 인 것을 확인합니다.
 ```
 aws ec2 describe-instances | jq -r '.Reservations[].Instances[].InstanceId'
 aws ec2 describe-instances --instance-ids i-0eace57965836216d | jq -r '.Reservations[].Instances[].MetadataOptions'
@@ -195,8 +195,6 @@ kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
 curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-security-workshop-nodegrou-NodeInstanceRole-QBU9FVSOHZEQ
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181433529-14e71fdb-a675-4df4-b7c3-e80de6addb3e.png)
-
-
 - 해당 설정은 AWS Config에 ec2-imdsv2-check 를 이용해서, 각 EC2의 IMDS 버전을 확인할 수 있으니 참고해주시기 바랍니다.
 
 https://docs.aws.amazon.com/config/latest/developerguide/ec2-imdsv2-check.html

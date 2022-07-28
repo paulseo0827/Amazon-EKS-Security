@@ -139,8 +139,11 @@ aws ecr create-repository --repository-name spring4shell --image-scanning-config
 docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181419573-e991972d-ce7c-4698-8a00-5686bf2c8934.png)
+- ECR repository 에 Vulnerabilities 항목들을 보면 결과로 Critical 16개, High 24개를 확인할 수 있고, CVE-2022-22965가 있는 것을 확인할 수 있습니다.
+![image](https://user-images.githubusercontent.com/25558369/181420103-ccd8f5b8-7ef0-402f-b406-e87c594d3979.png)
+- Inspector 서비스에서도 Findings 에 "By container image"에 아래 그림과 같은 결과를 확인할 수 있습니다. (Inspector에 결과가 나오는데 수 분이 걸릴 수 있습니다.)
+![image](https://user-images.githubusercontent.com/25558369/181420673-f22987d0-b608-43e9-9443-5040965b646b.png)
 
-- 
 ```
 ```
 

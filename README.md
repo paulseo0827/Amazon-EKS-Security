@@ -340,6 +340,8 @@ aws elasticache create-cache-cluster --cache-cluster-id redis-cart --cache-node-
 ```
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEKSVPCResourceController --role-name ${ROLE_NAME}
 
+kubectl set env daemonset aws-node -n kube-system ENABLE_PREFIX_DELEGATION=true
+
 kubectl -n kube-system set env daemonset aws-node ENABLE_POD_ENI=true
 
 kubectl -n kube-system rollout status ds aws-node

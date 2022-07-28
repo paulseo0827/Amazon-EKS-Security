@@ -263,6 +263,8 @@ kubectl -n microservice get pod
 14. Pod Security Group
 - 
 ```
+export VPC_ID=$(aws eks describe-cluster --name security-workshop --query "cluster.resourcesVpcConfig.vpcId" --output text)
+
 ```
 
 15. 자원 삭제

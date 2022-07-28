@@ -66,6 +66,10 @@ kubectl get node
 ROLE_NAME=$(aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role)
 aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
 ```
+- AWS Console의 Services에서 eks 입력하고, 하단에 Elastic Kuberntes Service를 선택합니다.
+![image](https://user-images.githubusercontent.com/25558369/181411945-ceef8e81-b9f5-4cf3-98e9-0ed714c0b7da.png)
+- 생성된 security-workshop EKS Cluster를 선택합니다.
+![image](https://user-images.githubusercontent.com/25558369/181412406-d0f05d59-d2ea-47b9-97bf-a2fb2c3799e1.png)
 
 
 4. 

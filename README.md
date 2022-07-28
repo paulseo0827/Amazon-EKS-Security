@@ -158,8 +158,11 @@ Username는 testuser 를 입력
 Password는 testpasswd 를 입력
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181424886-4223aa75-767a-49b3-bd0e-c8da4dd74330.png)
+- 명령어 수행 이후 GuardDuty 에서 아래와 같이 Finding이 있는 것을 확인할 수 있습니다.
+![image](https://user-images.githubusercontent.com/25558369/181425117-3fcbc9a0-a2f3-45c4-a3d8-45f83d403088.png)
+- 
 
-
+- 
 
 8. 
 

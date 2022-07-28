@@ -245,14 +245,25 @@ kubectl -n microservice get pod
 ```
 ```
 
+
 11. Falco
 - 
 ```
 ```
 
-12. OPA
 
-13. 자원 삭제
+12. OPA
+- 
+```
+```
+
+13. Pod Security Group
+- 
+```
+```
+
+
+14. 자원 삭제
 - 
 ```
 ```

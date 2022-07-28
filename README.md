@@ -167,7 +167,16 @@ https://docs.aws.amazon.com/ko_kr/guardduty/latest/ug/guardduty_finding-types-ku
 
 
 8. 
+- 
+```
+aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role
+kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
+curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-security-workshop-nodegrou-NodeInstanceRole-QBU9FVSOHZEQ
+```
+![image](https://user-images.githubusercontent.com/25558369/181430433-7d538392-9612-4aec-a504-cde343b63b85.png)
+- 
 
 
+- 
 ```
 ```

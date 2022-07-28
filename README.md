@@ -288,9 +288,7 @@ kubectl -n microservice get pod
 ```
 
 14. Pod Security Group
-- 
-
-- 
+- microservice namespace에 배포된 Redis (redis-cart deployment)를 Elasticache Redis 로 변경 작업을 하면서, Pod Security Group 를 적용합니다. Elasticache Redis 생성을 위해서 Security Group 생성 작업을 합니다.
 ```
 cd ~/environment/Amazon-EKS-Security/
 
@@ -310,8 +308,7 @@ export NODE_GROUP_SG=$(aws ec2 describe-security-groups --filters Name=tag:Name,
 ![image](https://user-images.githubusercontent.com/25558369/181585633-da845a69-f8dc-4917-b229-21524e5e2657.png)
 ![image](https://user-images.githubusercontent.com/25558369/181586009-d2c26f4a-45b4-4582-9acf-8113287e8714.png)
 ![image](https://user-images.githubusercontent.com/25558369/181586066-88e62a6a-8056-47bb-ba99-fa438f4c0055.png)
-
-- 
+- DNS resolution를 위해 Pod는 Worker Node TCP/UDP 53 port로 통신이 필요합니다. Worker Node 의 Security Group 에 Inbound로 Pod Security Group이 통신될 수 있게 TCP/UDP 53포트를 입력합니다.
 ```
 aws ec2 authorize-security-group-ingress --group-id ${NODE_GROUP_SG} --protocol tcp --port 53 --source-group ${POD_SG}
 
@@ -323,9 +320,6 @@ aws ec2 authorize-security-group-ingress --group-id ${POD_SG} --protocol tcp --p
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181586161-40ec1f0f-58fc-47c1-9922-b26691cf06bc.png)
 ![image](https://user-images.githubusercontent.com/25558369/181648268-9e7664dd-220d-45ae-9fd4-c8766a523755.png)
-
-
-
 - 
 ```
 export PRIVATE_SUBNETS_ID=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" "Name=tag:Name,Values=eksctl-security-workshop-cluster/SubnetPrivate*" --query 'Subnets[*].SubnetId' --output json | jq -c .)

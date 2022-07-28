@@ -250,7 +250,9 @@ kubectl -n microservice get pod
 ```
 ```
 
-12. 자원 삭제
+12. OPA
+
+13. 자원 삭제
 - 
 ```
 ```

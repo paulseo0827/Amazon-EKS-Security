@@ -175,8 +175,31 @@ curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-sec
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181430433-7d538392-9612-4aec-a504-cde343b63b85.png)
 - 
+```
+aws ec2 describe-instances | jq -r '.Reservations[].Instances[].InstanceId'
+aws ec2 describe-instances --instance-ids i-0eace57965836216d | jq -r '.Reservations[].Instances[].MetadataOptions'
+```
+![image](https://user-images.githubusercontent.com/25558369/181432810-01c23a01-461e-45ba-9969-de8bd1dd71e9.png)
+- 
+```
+aws ec2 modify-instance-metadata-options --instance-id i-0eace57965836216d --http-tokens required --http-endpoint enabled
+aws ec2 modify-instance-metadata-options --instance-id i-0e2b6b09c4343b45e --http-tokens required --http-endpoint enabled
+aws ec2 modify-instance-metadata-options --instance-id i-0b8e95d29144ac592 --http-tokens required --http-endpoint enabled
+aws ec2 modify-instance-metadata-options --instance-id i-07df9bf65fe7a8200 --http-tokens required --http-endpoint enabled 
+```
+![image](https://user-images.githubusercontent.com/25558369/181433223-fb4c6c11-6e5a-449f-853f-5f6c7bae1d9c.png)
+
+
+- 
+```
+aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role
+kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
+curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-security-workshop-nodegrou-NodeInstanceRole-QBU9FVSOHZEQ
+```
+![image](https://user-images.githubusercontent.com/25558369/181433529-14e71fdb-a675-4df4-b7c3-e80de6addb3e.png)
 
 
 - 
 ```
 ```
+

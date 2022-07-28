@@ -152,8 +152,13 @@ docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 7. Amazon GuardDuty로 EKS 보안 확인
 - GuardDuty를 이용하여 EKS Audit Log를 기준으로 권한이나 보안 관련 문제들을 쉽게 찾을 수 있습니다.
 ```
+./2_guardduty.sh 
+kubectl get pods --kubeconfig guardduty/anonymous-kubeconfig
+Username는 testuser 를 입력
+Password는 testpasswd 를 입력
 ```
-![image](https://user-images.githubusercontent.com/25558369/181422870-1f5d1973-1b80-4611-9aca-5fecabd0a14a.png)
+![image](https://user-images.githubusercontent.com/25558369/181424886-4223aa75-767a-49b3-bd0e-c8da4dd74330.png)
+
 
 
 8. 

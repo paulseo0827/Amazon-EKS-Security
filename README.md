@@ -32,15 +32,15 @@ https://console.aws.amazon.com/iam/home#/roles$new?step=review&commonUseCase=EC2
 - 위에서 생성한 "eks-security-workshop-admin" IAM Role를 선택하고, "Update IAM role" 버튼을 선택한다.
 ![image](https://user-images.githubusercontent.com/25558369/181399979-ab09f5d4-941a-40ff-8e02-798958f8e792.png)
 - 실습에 사용하는 소스를 clone 작업한다.
-
-  git clone https://github.com/paulseo0827/Amazon-EKS-Security.git
-
+₩₩₩
+git clone https://github.com/paulseo0827/Amazon-EKS-Security.git
+₩₩₩
 ![image](https://user-images.githubusercontent.com/25558369/181400225-8b8039c2-e673-4b7d-9623-2e010d26ac80.png)
 - 작업에 필요한 툴(kubectl, eksctl, kustomize, aws-cli 등)을 설치하고, 실습에 필요한 설정 작업을 합니다.
-
-  cd Amazon-EKS-Security
-  ./0_install.sh 
-
+₩₩₩
+cd Amazon-EKS-Security
+./0_install.sh 
+₩₩₩
 
 
 3. 

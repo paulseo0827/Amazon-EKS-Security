@@ -85,8 +85,14 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 - "Enable GuardDuty" 버튼을 선택해서, GuardDuty 기능을 활성화 합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181403145-26339e62-e5d8-4da4-a0c3-2e43eb4e67d7.png)
 
+5. Amazon Inspector 기능 활성화
+- AWS Console의 Services에서 inspector 입력하고, 하단에 Inspector를 선택합니다.
+![image](https://user-images.githubusercontent.com/25558369/181414179-b778fa06-cebd-4c78-ba7b-e581c1b51d58.png)
+- "Get Started" 버튼을 선택합니다.
+![image](https://user-images.githubusercontent.com/25558369/181414300-3111ffe3-a6e5-4fb5-aebd-b559c9fc2cd0.png)
+- "Enable Inspector" 버튼을 선택합니다.
+![image](https://user-images.githubusercontent.com/25558369/181414387-44339fbb-6ed8-42e0-9ff9-072e046046bb.png)
 
-5. 
 
 6. 
 

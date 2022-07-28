@@ -163,7 +163,6 @@ Password는 testpasswd 를 입력
 - 각 Finding 을 해결하는 방법은 아래 workshop를 참고해주시기 바랍니다.
 
 https://catalog.workshops.aws/guardduty/en-US/module11/mod11-2-remediation
-
 https://docs.aws.amazon.com/ko_kr/guardduty/latest/ug/guardduty_finding-types-kubernetes.html
 
 

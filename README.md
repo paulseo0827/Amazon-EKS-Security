@@ -15,6 +15,7 @@
 
 2. 실습 환경 설정
 - 아래 URL를 클릭하여 IAM Role를 생성한다.
+
 https://console.aws.amazon.com/iam/home#/roles$new?step=review&commonUseCase=EC2%2BEC2&selectedUseCase=EC2&policies=arn:aws:iam::aws:policy%2FAdministratorAccess&roleName=eks-security-workshop-admin
 - "Next" 버튼을 선택한다.
 ![image](https://user-images.githubusercontent.com/25558369/181398390-5c35ca86-db64-456e-81f3-7a0edc14ac3d.png)

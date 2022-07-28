@@ -104,11 +104,25 @@ docker build --tag spring4shell:latest .
 docker images
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181415431-9367daf4-dfa4-46cd-affd-77a413f18843.png)
-- 위에 빌드한 이미지를 ECR 에 저장하기 위해서 repository 를 생성하고, ECR login를 한다.
+- 위에 빌드한 이미지를 ECR에 저장하기 위해서 repository 를 생성하고, ECR login를 합니다.
 ```
 aws ecr create-repository --repository-name spring4shell --image-scanning-configuration scanOnPush=true
 aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com 
 ```
+![image](https://user-images.githubusercontent.com/25558369/181416263-04992e8e-42ab-479f-a9b0-83a63a544185.png)
+- 빌드한 spring4shell 이미지를 ECR로 올립니다.
+```
+docker tag spring4shell:latest $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
+docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
+```
+![image](https://user-images.githubusercontent.com/25558369/181416577-b7f41d60-0e64-40b2-ac14-63bb948a4418.png)
+- 
+```
+```
+- 
+```
+```
+
 
 
 7. 

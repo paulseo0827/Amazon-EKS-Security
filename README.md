@@ -32,7 +32,7 @@ https://console.aws.amazon.com/iam/home#/roles$new?step=review&commonUseCase=EC2
 ![image](https://user-images.githubusercontent.com/25558369/181399254-dc59a33c-240e-421e-b991-463fb489256f.png)
 - 위에서 생성한 "eks-security-workshop-admin" IAM Role를 선택하고, "Update IAM role" 버튼을 선택합니다..
 ![image](https://user-images.githubusercontent.com/25558369/181399979-ab09f5d4-941a-40ff-8e02-798958f8e792.png)
-- 실습에 사용하는 소스를 clone 작업합니다..
+- 실습에 사용하는 소스를 가져옵니다.
 ```
 git clone https://github.com/paulseo0827/Amazon-EKS-Security.git
 ```
@@ -99,11 +99,20 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 
 6. Amazon ECR Container Image Scan 기능 테스트
 - AWS에서 제공하는 Container Image scan 기능을 알아보도록 하겠습니다. 예제로는 2022년 3월말 Spring 프레임워크 취약점을 가지고 확인해보겠습니다. (https://www.ahnlab.com/kr/site/securityinfo/asec/asecView.do?groupLevel=001&groupCode=VNI002&seq=31635)
-- Spring 프레임워크 취약점을 가진 이미지를 빌드합니다.
+- Spring 프레임워크 취약점을 테스트를 위해서 해당 git repo를 가져옵니다.
 ```
 cd ~/environment
 git clone https://github.com/paulseo0827/Spring4Shell-POC.git
 cd Spring4Shell-POC
+```
+- Lint 툴(https://github.com/hadolint/hadolint)를 이용하여 Dockerfile를 최적화를 합니다. ADD 부분을 COPY로, apt를 apt-get 으로 수정합니다.
+```
+hadolint Dockerfile 
+vi Dockerfile
+```
+![image](https://user-images.githubusercontent.com/25558369/181462509-8a9ea72a-0df6-4674-a9e2-9dead0c4b844.png)
+- Spring 프레임워크 취약점을 가진 이미지를 빌드합니다.
+```
 docker build --tag spring4shell:latest .
 docker images
 ```

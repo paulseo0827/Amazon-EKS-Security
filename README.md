@@ -13,6 +13,7 @@
 - 다음 화면에서 리뷰를 하고 문제가 없으면 "Create environment" 버튼을 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181397575-b2b5e3ba-0ae1-474b-8e4e-917b03388dd1.png)
 
+
 2. 실습 환경 설정
 - 아래 URL를 클릭하여 IAM Role를 생성합니다.
 
@@ -77,6 +78,7 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 - Cluster name 에 "security-workshop" 를 입력하고 Confirm 버튼을 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181413323-bbf88184-b8c0-4838-9f42-e9c791198417.png)
 
+
 4. Amazon GuardDuty 기능 활성화
 - AWS Console의 Services에서 guardduty를 입력하고, 하단에 GuardDuty를 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181403056-c46c7afb-aaa8-442f-a492-61284be3a2c3.png)
@@ -84,6 +86,7 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 ![image](https://user-images.githubusercontent.com/25558369/181403093-9e4a6c3f-9a51-4ece-af45-1f110cfe553f.png)
 - "Enable GuardDuty" 버튼을 선택해서, GuardDuty 기능을 활성화 합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181403145-26339e62-e5d8-4da4-a0c3-2e43eb4e67d7.png)
+
 
 5. Amazon Inspector 기능 활성화
 - AWS Console의 Services에서 inspector 입력하고, 하단에 Inspector를 선택합니다.
@@ -93,7 +96,8 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 - "Enable Inspector" 버튼을 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181414387-44339fbb-6ed8-42e0-9ff9-072e046046bb.png)
 
-6. Amazon ECR Scan 기능 테스트
+
+6. Amazon ECR Container Image Scan 기능 테스트
 - AWS에서 제공하는 Container Image scan 기능을 알아보도록 하겠습니다. 예제로는 2022년 3월말 Spring 프레임워크 취약점을 가지고 확인해보겠습니다. (https://www.ahnlab.com/kr/site/securityinfo/asec/asecView.do?groupLevel=001&groupCode=VNI002&seq=31635)
 - Spring 프레임워크 취약점을 가진 이미지를 빌드합니다.
 ```
@@ -144,9 +148,13 @@ docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 - Inspector 서비스에서도 Findings 에 "By container image"에 아래 그림과 같은 결과를 확인할 수 있습니다. (Inspector에 결과가 나오는데 수 분이 걸릴 수 있습니다.)
 ![image](https://user-images.githubusercontent.com/25558369/181420673-f22987d0-b608-43e9-9443-5040965b646b.png)
 
-```
-```
-
-
 
 7. 
+
+
+
+8. 
+
+
+```
+```

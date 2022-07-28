@@ -93,7 +93,22 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 - "Enable Inspector" 버튼을 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181414387-44339fbb-6ed8-42e0-9ff9-072e046046bb.png)
 
+6. Amazon ECR Scan 기능 테스트
 
-6. 
+- ㅇ
+```
+cd ~/environment
+git clone https://github.com/paulseo0827/Spring4Shell-POC.git
+cd Spring4Shell-POC
+docker build --tag spring4shell:latest .
+docker images
+```
+![image](https://user-images.githubusercontent.com/25558369/181415431-9367daf4-dfa4-46cd-affd-77a413f18843.png)
+- 위에 빌드한 이미지를 ECR 에 저장하기 위해서 repository 를 생성하고, ECR login를 한다.
+```
+aws ecr create-repository --repository-name spring4shell --image-scanning-configuration scanOnPush=true
+aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com 
+```
+
 
 7. 

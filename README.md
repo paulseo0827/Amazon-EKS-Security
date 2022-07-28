@@ -319,15 +319,7 @@ aws ec2 authorize-security-group-ingress --group-id ${REDIS_SG} --protocol tcp -
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181586161-40ec1f0f-58fc-47c1-9922-b26691cf06bc.png)
 
-
-
-
-
-
-
-
-
-
+- 
 ```
 export PRIVATE_SUBNETS_ID=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" "Name=tag:Name,Values=eksctl-security-workshop-cluster/SubnetPrivate*" --query 'Subnets[*].SubnetId' --output json | jq -c .)
 
@@ -336,14 +328,54 @@ aws elasticache create-cache-subnet-group --cache-subnet-group-name rediscart --
 ![image](https://user-images.githubusercontent.com/25558369/181586785-39553616-8949-40ee-93c8-e882918717bf.png)
 ![image](https://user-images.githubusercontent.com/25558369/181585190-fe20e547-d5f3-4fc5-9fa5-6eda7bc381d3.png)
 
-
+- 
 ```
 aws elasticache create-cache-cluster --cache-cluster-id redis-cart --cache-node-type cache.r5.large --engine redis --num-cache-nodes 1 --cache-parameter-group default.redis6.x --cache-subnet-group-name rediscart --security-group-ids ${REDIS_SG}
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181584985-547407a6-e133-4677-8b13-a86ed6bb3c80.png)
 
+- 
+```
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEKSVPCResourceController --role-name ${ROLE_NAME}
+
+kubectl -n kube-system set env daemonset aws-node ENABLE_POD_ENI=true
+
+kubectl -n kube-system rollout status ds aws-node
+```
+![image](https://user-images.githubusercontent.com/25558369/181587870-5a9026a5-985f-4e99-b968-022dfb246272.png)
 
 
+- 
+```
+cat << EoF > ~/environment/Amazon-EKS-Security/sg-policy.yaml
+apiVersion: vpcresources.k8s.aws/v1beta1
+kind: SecurityGroupPolicy
+metadata:
+  name: allow-redis-access
+spec:
+  podSelector:
+    matchLabels:
+      app: cartservice
+  securityGroups:
+    groupIds:
+      - ${POD_SG}
+EoF
+```
+![image](https://user-images.githubusercontent.com/25558369/181588024-c52a7ae2-43bc-4e26-a517-61325a2fd03f.png)
+
+
+- 
+```
+kubectl -n microservice apply -f sg-policy.yaml
+
+kubectl -n microservice describe securitygrouppolicy
+```
+![image](https://user-images.githubusercontent.com/25558369/181588226-7a724ae3-3c13-4fdc-a594-451b4cf46ec0.png)
+
+
+- 
+```
+```
 
 
 15. 자원 삭제

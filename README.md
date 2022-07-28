@@ -54,12 +54,13 @@ cd Amazon-EKS-Security
 eksctl create cluster -f eks-security-workshop.yaml
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181402293-73dfdc44-b5b7-4ea0-ad5c-e6f28626718e.png)
+![image](https://user-images.githubusercontent.com/25558369/181411686-57a19642-5e86-4a3b-bfb1-2d28f1a4da67.png)
 
 - 작업이 완료되면 worker node 정보를 제대로 가져오는지 확인합니다.
 ```
 kubectl get node
 ```
-
+![image](https://user-images.githubusercontent.com/25558369/181411732-7e6f9ca3-7341-4e50-a860-aff97a661c60.png)
 - 실습을 위해서 Worker Node의 IAM Role에 S3FullAccess IAM Policy를 붙입니다.
 ```
 ROLE_NAME=$(aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role)

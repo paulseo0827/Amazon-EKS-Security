@@ -149,7 +149,9 @@ docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 ![image](https://user-images.githubusercontent.com/25558369/181420673-f22987d0-b608-43e9-9443-5040965b646b.png)
 
 
-7. 
+7. Amazon GuardDuty로 EKS 보안 확인
+- GuardDuty를 이용하여 
+7. Amazon GuardDuty로 EKS 보안 확인
 
 
 

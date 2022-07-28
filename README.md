@@ -71,6 +71,13 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 - 생성된 security-workshop EKS Cluster를 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181412406-d0f05d59-d2ea-47b9-97bf-a2fb2c3799e1.png)
 
+- 하단 탭에서 Networking를 선택하고, 오른쪽에 "Manage networking" 버튼을 선택합니다.
+![image](https://user-images.githubusercontent.com/25558369/181412588-a192954d-fc46-4265-884a-c8e6db953710.png)
+
+![image](https://user-images.githubusercontent.com/25558369/181412825-3222581e-7d9d-4ad2-928e-39ebc6e6107e.png)
+
+![image](https://user-images.githubusercontent.com/25558369/181413323-bbf88184-b8c0-4838-9f42-e9c791198417.png)
+
 
 4. 
 ![image](https://user-images.githubusercontent.com/25558369/181402927-a8f85278-122e-4c91-a8af-cb86fba8b5d8.png)

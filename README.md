@@ -48,4 +48,10 @@ cd Amazon-EKS-Security
 ![image](https://user-images.githubusercontent.com/25558369/181401440-f0a407bc-5a51-41a7-94b5-07ae172797c1.png)
 
 
-3. 
+3. Amazon EKS Cluster 생성
+- eksctl 툴을 이용해서 Amzon EKS Cluster (Control Plane + Date Plane)를 생성한다.
+```
+
+```
+
+4. 

@@ -288,7 +288,7 @@ kubectl -n microservice get pod
 ```
 
 14. Pod Security Group
-- microservice namespace에 배포된 Redis (redis-cart deployment)를 Elasticache Redis 로 변경 작업을 하면서, Pod Security Group 를 적용합니다. Elasticache Redis 생성을 위해서 Security Group 생성 작업을 합니다.
+- microservice namespace에 배포된 Redis (redis-cart deployment)를 Elasticache Redis 로 변경 작업을 하면서, Redis 와 통신을 하는 Pod(cartservice)에 Pod Security Group 를 적용합니다. 먼저 Elasticache Redis 생성을 위해서 Security Group 생성 작업을 합니다.
 ```
 cd ~/environment/Amazon-EKS-Security/
 
@@ -308,7 +308,7 @@ export NODE_GROUP_SG=$(aws ec2 describe-security-groups --filters Name=tag:Name,
 ![image](https://user-images.githubusercontent.com/25558369/181585633-da845a69-f8dc-4917-b229-21524e5e2657.png)
 ![image](https://user-images.githubusercontent.com/25558369/181586009-d2c26f4a-45b4-4582-9acf-8113287e8714.png)
 ![image](https://user-images.githubusercontent.com/25558369/181586066-88e62a6a-8056-47bb-ba99-fa438f4c0055.png)
-- DNS resolution를 위해 Pod는 Worker Node TCP/UDP 53 port로 통신이 필요합니다. Worker Node 의 Security Group 에 Inbound로 Pod Security Group이 통신될 수 있게 TCP/UDP 53포트를 입력합니다.
+- DNS resolution를 위해 Pod는 Worker Node와 TCP/UDP 53 port로 통신이 필요합니다. Worker Node 의 Security Group 에 Inbound로 Pod가 통신될 수 있게 TCP/UDP 53포트를 입력합니다. 그리고, Pod에서 내부 VPC에 있는 자원들의 요청이 정상적으로 들어올 수 있도록 VPC CIDR 값을 Inbound에 추가합니다.
 ```
 aws ec2 authorize-security-group-ingress --group-id ${NODE_GROUP_SG} --protocol tcp --port 53 --source-group ${POD_SG}
 
@@ -320,7 +320,7 @@ aws ec2 authorize-security-group-ingress --group-id ${POD_SG} --protocol tcp --p
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181586161-40ec1f0f-58fc-47c1-9922-b26691cf06bc.png)
 ![image](https://user-images.githubusercontent.com/25558369/181648268-9e7664dd-220d-45ae-9fd4-c8766a523755.png)
-- 
+- VPC Private Subnet 정보로 Elasticache Redis 의 Subnet Group 를 생성합니다.
 ```
 export PRIVATE_SUBNETS_ID=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" "Name=tag:Name,Values=eksctl-security-workshop-cluster/SubnetPrivate*" --query 'Subnets[*].SubnetId' --output json | jq -c .)
 
@@ -328,8 +328,7 @@ aws elasticache create-cache-subnet-group --cache-subnet-group-name rediscart --
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181586785-39553616-8949-40ee-93c8-e882918717bf.png)
 ![image](https://user-images.githubusercontent.com/25558369/181585190-fe20e547-d5f3-4fc5-9fa5-6eda7bc381d3.png)
-
-- 
+- redis-cart 이름을h Elasticache Redis 생성을 합니다. 해당 작업은 약 5분 내외로 시간 소요가 됩니다.
 ```
 aws elasticache create-cache-cluster --cache-cluster-id redis-cart --cache-node-type cache.r5.large --engine redis --num-cache-nodes 1 --cache-parameter-group default.redis6.x --cache-subnet-group-name rediscart --security-group-ids ${REDIS_SG}
 ```

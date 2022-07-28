@@ -152,6 +152,7 @@ docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 7. Amazon GuardDuty로 EKS 보안 확인
 - GuardDuty를 이용하여 EKS Audit Log를 기준으로 권한이나 보안 관련 문제들을 쉽게 찾을 수 있습니다.
 ```
+cd ~/environment/Amazon-EKS-Security/
 ./2_guardduty.sh 
 kubectl get pods --kubeconfig guardduty/anonymous-kubeconfig
 Username는 testuser 를 입력
@@ -200,7 +201,33 @@ curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-sec
 https://docs.aws.amazon.com/config/latest/developerguide/ec2-imdsv2-check.html
 
 
-9. 
+9. Amazon EKS에 배포된 워크로드가 문제가 없는지 Polaris By Fairwinds 를 이용하여 확인
+- 
+```
+cd ~/environment/Amazon-EKS-Security/
+./3_polaris.sh
+```
+![image](https://user-images.githubusercontent.com/25558369/181437996-66489695-29d6-49c5-8e59-3e500a524d66.png)
+
+
 ```
 ```
+
+
+```
+```
+
+10. 
+
+```
+```
+
+```
+```
+
+
+
+
+
+
 

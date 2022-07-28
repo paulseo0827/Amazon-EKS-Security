@@ -333,8 +333,7 @@ aws elasticache create-cache-subnet-group --cache-subnet-group-name rediscart --
 aws elasticache create-cache-cluster --cache-cluster-id redis-cart --cache-node-type cache.r5.large --engine redis --num-cache-nodes 1 --cache-parameter-group default.redis6.x --cache-subnet-group-name rediscart --security-group-ids ${REDIS_SG}
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181584985-547407a6-e133-4677-8b13-a86ed6bb3c80.png)
-
-- 
+- Pod Security Group 적용을 위해서, Worker Node IAM Role에 AmazonEKSVPCResourceController Policy 를 추가합니다. 그리고, CNI Plugin이 Pod의 ENI를 컨트롤 할 수 있도록 aws-node daemonset 에 설정 작업을 합니다.
 ```
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEKSVPCResourceController --role-name ${ROLE_NAME}
 
@@ -345,8 +344,6 @@ kubectl -n kube-system set env daemonset aws-node ENABLE_POD_ENI=true
 kubectl -n kube-system rollout status ds aws-node
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181587870-5a9026a5-985f-4e99-b968-022dfb246272.png)
-
-
 - 
 ```
 cat << EoF > ~/environment/Amazon-EKS-Security/sg-policy.yaml

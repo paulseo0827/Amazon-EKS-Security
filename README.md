@@ -202,6 +202,13 @@ https://docs.aws.amazon.com/config/latest/developerguide/ec2-imdsv2-check.html
 
 
 9. Amazon EKS에 배포된 워크로드가 문제가 없는지 Polaris By Fairwinds 를 이용하여 확인
+- Microservice 어플리케이션 배포를 한다.
+```
+cd ~/environment/Amazon-EKS-Security/
+./4_microservice.sh
+kubectl -n microservice get pod,svc
+```
+![image](https://user-images.githubusercontent.com/25558369/181448318-ae0d4338-698a-432c-a091-10fbde18e995.png)
 - 
 ```
 cd ~/environment/Amazon-EKS-Security/

@@ -22,3 +22,13 @@ https://console.aws.amazon.com/iam/home#/roles$new?step=review&commonUseCase=EC2
 ![image](https://user-images.githubusercontent.com/25558369/181398479-4c659a51-b720-44ac-b2b4-6f26c904a72e.png)
 - "Next" 버튼을 선택한다.
 ![image](https://user-images.githubusercontent.com/25558369/181398633-93f370f2-d9c8-4c8b-9100-8f4145606c64.png)
+- "Create role" 버튼을 선택한다.
+![image](https://user-images.githubusercontent.com/25558369/181398732-af599cdd-833e-4e62-a137-2bc78612cb6e.png)
+- Cloud9에 "T"로 보이는 버튼을 선택하여 "Managed EC2 Instance"를 선택한다. ("T"는 현재 접속하고 있는 IAM Role의 맨 앞자리 입니다.)
+![image](https://user-images.githubusercontent.com/25558369/181399086-9d03212a-5ab8-4cd7-bad6-043f29a29acf.png)
+- Cloud9 EC2 인스턴스를 선택한 상태에서, 위에 Action 버튼을 클릭하고, Security 항목에 "Modify IAM role"를 선택한다.
+![image](https://user-images.githubusercontent.com/25558369/181399254-dc59a33c-240e-421e-b991-463fb489256f.png)
+
+
+
+3. 

@@ -488,6 +488,7 @@ aws logs delete-log-group --log-group-name /aws/eks/security-workshop/cluster
 - Cloud9 를 삭제합니다. 만약, 삭제가 제대로 안된다면, AWS Console 에 Cloud9 에 직접가서 삭제를 합니다.
 ```
 CLOUD9_ENVIRONMENTID=$(aws cloud9 list-environments | jq -r '.environmentIds[]')
+
 aws cloud9 delete-environment --environment-id $CLOUD9_ENVIRONMENTID
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181713697-1f89b67e-a4d8-45e7-8035-40f23898e2ab.png)

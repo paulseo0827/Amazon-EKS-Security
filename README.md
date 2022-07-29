@@ -408,6 +408,8 @@ EoF
 ![image](https://user-images.githubusercontent.com/25558369/181588024-c52a7ae2-43bc-4e26-a517-61325a2fd03f.png)
 - Security Group Policy 를 적용하고, 정상적으로 적용이 되었는지 확인을 합니다.
 ```
+cd ~/environment/Amazon-EKS-Security
+
 kubectl -n microservice apply -f sg-policy.yaml
 
 kubectl -n microservice describe securitygrouppolicy
@@ -415,6 +417,8 @@ kubectl -n microservice describe securitygrouppolicy
 ![image](https://user-images.githubusercontent.com/25558369/181588226-7a724ae3-3c13-4fdc-a594-451b4cf46ec0.png)
 - Elasticache Redis Endpoint 정보를 cartservice-podsg.yaml 에 입력을 하고, cartservice deployment 의 Redis 설정을 redis-cart pod 에서 Elasticache Redis 로 설정 변경을 합니다. 변경 이후에 redis-cart deployment 를 삭제합니다.
 ```
+cd ~/environment/Amazon-EKS-Security
+
 REDIS_ADDRESS=$(aws elasticache describe-cache-clusters --show-cache-node-info | jq -r '.CacheClusters[].CacheNodes[].Endpoint.Address')
 
 sed -i s%CHANGEME%$REDIS_ADDRESS:6379% cartservice-podsg.yaml 

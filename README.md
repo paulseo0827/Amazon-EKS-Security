@@ -463,10 +463,11 @@ aws ecr delete-repository --repository-name spring4shell --force
 - Elasticache Redis 를 삭제합니다.
 ```
 aws elasticache delete-cache-cluster --cache-cluster-id redis-cart
+
+aws elasticache delete-cache-subnet-group --cache-subnet-group-name rediscart
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181705026-59fb8ce5-cd10-46db-a703-bd8d8e6beb6e.png)
-
-
+![image](https://user-images.githubusercontent.com/25558369/181784436-9abf6658-646c-4f05-a2b6-9c3000c28efe.png)
 - 실습에 사용하였던 IAM Policy 2개를 Worker Node IAM Role에서 제거합니다.
 ```
 ROLE_NAME=$(aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role)

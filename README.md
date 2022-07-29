@@ -447,12 +447,14 @@ aws inspector2 disable --resource-types EC2 ECR
 ![image](https://user-images.githubusercontent.com/25558369/181704180-58bb83da-c284-4264-96ce-5829e7089819.png)
 
 
-- 
+- spring4shell 컨테이너 이미지를 저장하고 있는 ECR Repository 를 삭제합니다.
 ```
+aws ecr delete-repository --repository-name spring4shell --force
 ```
+![image](https://user-images.githubusercontent.com/25558369/181704569-00be2dce-141b-4fad-8a24-10f4ff7a5b11.png)
 
 
-- 
+- Elasticache Redis 를 삭제합니다.
 ```
 ```
 

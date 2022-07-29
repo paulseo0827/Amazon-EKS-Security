@@ -195,6 +195,8 @@ https://docs.aws.amazon.com/ko_kr/guardduty/latest/ug/guardduty_finding-types-ku
 ```
 aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role
 
+여기서 나온 IAM Role 정보를 하단에 curl 명령어에 넣습니다.
+
 kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
 
 curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-security-workshop-nodegrou-NodeInstanceRole-QBU9FVSOHZEQ
@@ -221,6 +223,8 @@ aws ec2 modify-instance-metadata-options --instance-id i-07df9bf65fe7a8200 --htt
 - 변경 후, kube-system의 restricted-namespace-pod pod에 접속하여, metadata 호출이 안되는지 확인을 합니다.
 ```
 aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role
+
+여기서 나온 IAM Role 정보를 하단에 curl 명령어에 넣습니다.
 
 kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
 

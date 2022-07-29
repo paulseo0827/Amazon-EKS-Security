@@ -24,9 +24,16 @@ kubectl apply -f guardduty/anonymous.yaml
 
 kubectl apply -f guardduty/elevate.yaml
 
-kubectl apply -f guardduty/expose_k8s_dashboard.yaml
-
 kubectl apply -f guardduty/k8-dashboard.yaml
+
+kubectl apply -f guardduty/expose_k8s_dashboard.yaml
 
 kubectl apply -f guardduty/pod_with_sensitive_mount.yaml
 
+/usr/local/bin/kubectl run --image=nginx restricted-namespace-pod -n kube-system
+sleep 10
+
+POD_ID=`/usr/local/bin/kubectl get pod -n kube-system | grep "restricted-namespace-pod" | cut -f1 -d " "`
+/usr/local/bin/kubectl exec -it $POD_ID sh -n kube-system <<'EOT'
+date
+EOT

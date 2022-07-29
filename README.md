@@ -427,8 +427,6 @@ kubectl -n microservice get svc frontend-external
 aws s3 rb s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID --force
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181702336-093681be-c719-48fc-b9b5-7ab7007b0bfc.png)
-
-
 - GuardDuty 를 중지합니다. 명령어 수행 이후, AWS Console 에 GuardDuty 에 아래와 같은 화면이 뜨는지 확인합니다.
 ```
 GUARDDUTY_DETECTORID=$(aws guardduty list-detectors | jq -r '.DetectorIds[]')
@@ -437,26 +435,22 @@ aws guardduty delete-detector --detector-id $GUARDDUTY_DETECTORID
 
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181703131-0eb2a552-287e-46dc-bc6b-ec11234e0228.png)
-
-
 - Inspector 를 중지합니다. 명령어 수행 이후, AWS Console 에 Inspector 에 아래와 같은 화면이 뜨는지 확인합니다.
 ```
 aws inspector2 disable --resource-types EC2 ECR
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181704066-20588d13-870e-4fcd-b859-03a5b01ec900.png)
 ![image](https://user-images.githubusercontent.com/25558369/181704180-58bb83da-c284-4264-96ce-5829e7089819.png)
-
-
 - spring4shell 컨테이너 이미지를 저장하고 있는 ECR Repository 를 삭제합니다.
 ```
 aws ecr delete-repository --repository-name spring4shell --force
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181704569-00be2dce-141b-4fad-8a24-10f4ff7a5b11.png)
-
-
 - Elasticache Redis 를 삭제합니다.
 ```
+aws elasticache delete-cache-cluster --cache-cluster-id redis-cart
 ```
+![image](https://user-images.githubusercontent.com/25558369/181705026-59fb8ce5-cd10-46db-a703-bd8d8e6beb6e.png)
 
 
 - 
@@ -464,5 +458,8 @@ aws ecr delete-repository --repository-name spring4shell --force
 ```
 
 
+- 
+```
+```
 
 

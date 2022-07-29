@@ -102,7 +102,7 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 - AWS에서 제공하는 Container Image scan 기능을 알아보도록 하겠습니다. 예제로는 2022년 3월말 Spring 프레임워크 취약점을 가지고 확인해보겠습니다. (https://www.ahnlab.com/kr/site/securityinfo/asec/asecView.do?groupLevel=001&groupCode=VNI002&seq=31635)
 - Spring 프레임워크 취약점을 테스트를 위해서 해당 git repo를 가져옵니다.
 ```
-cd ~/environment
+cd ~/environment/Amazon-EKS-Security
 
 git clone https://github.com/paulseo0827/Spring4Shell-POC.git
 

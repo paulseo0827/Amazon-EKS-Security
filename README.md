@@ -439,9 +439,12 @@ aws guardduty delete-detector --detector-id $GUARDDUTY_DETECTORID
 ![image](https://user-images.githubusercontent.com/25558369/181703131-0eb2a552-287e-46dc-bc6b-ec11234e0228.png)
 
 
-- 
+- Inspector 를 중지합니다. 명령어 수행 이후, AWS Console 에 Inspector 에 아래와 같은 화면이 뜨는지 확인합니다.
 ```
+aws inspector2 disable --resource-types EC2 ECR
 ```
+![image](https://user-images.githubusercontent.com/25558369/181704066-20588d13-870e-4fcd-b859-03a5b01ec900.png)
+![image](https://user-images.githubusercontent.com/25558369/181704180-58bb83da-c284-4264-96ce-5829e7089819.png)
 
 
 - 

@@ -464,8 +464,9 @@ aws iam detach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 ![image](https://user-images.githubusercontent.com/25558369/181706181-603b6ba6-0877-4924-8698-0cf1883220bb.png)
 
 
-- 
+- Amazon EKS Cluster를 삭제합니다.
 ```
+eksctl delete cluster --name security-workshop
 ```
 
 

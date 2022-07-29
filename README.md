@@ -505,8 +505,9 @@ aws ec2 delete-security-group --group-id $POD_SG
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181784932-45162dc1-ff1f-492f-bf79-194cef94eab4.png)
 ![image](https://user-images.githubusercontent.com/25558369/181785218-e8e6c338-5dbc-4cf4-b80b-6f01af7ae82b.png)
-
-
+![image](https://user-images.githubusercontent.com/25558369/181788241-b77b1b59-218f-4793-b8f5-93c754fbe418.png)
+![image](https://user-images.githubusercontent.com/25558369/181788347-050ffcc6-0381-40ae-92fb-d579b65b0fc5.png)
+![image](https://user-images.githubusercontent.com/25558369/181788312-f37c4ee8-8a10-450f-bff8-0742f2697c06.png)
 - Amazon EKS Cluster를 삭제합니다.
 ```
 eksctl delete cluster --name security-workshop

@@ -227,6 +227,8 @@ aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-n
 kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
 
 curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-security-workshop-nodegrou-NodeInstanceRole-QBU9FVSOHZEQ
+
+exit
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181433529-14e71fdb-a675-4df4-b7c3-e80de6addb3e.png)
 - 해당 설정은 AWS Config에 ec2-imdsv2-check 를 이용해서, 각 EC2의 IMDS 버전을 확인할 수 있으니 참고해주시기 바랍니다.

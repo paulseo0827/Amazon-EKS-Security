@@ -237,7 +237,7 @@ https://docs.aws.amazon.com/config/latest/developerguide/ec2-imdsv2-check.html
 ```
 cd ~/environment/Amazon-EKS-Security/
 
-./4_microservice.sh
+./3_microservice.sh
 
 kubectl -n microservice get pod,svc
 ```
@@ -246,7 +246,7 @@ kubectl -n microservice get pod,svc
 ```
 cd ~/environment/Amazon-EKS-Security/
 
-./3_polaris.sh
+./4_polaris.sh
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181437996-66489695-29d6-49c5-8e59-3e500a524d66.png)
 - Polaris 에 LoadBalancer 정보를 조회해서, 그 URL로 접속을 하면 아래 캡처화면과 같은 사이트에 접속할 수 있습니다.

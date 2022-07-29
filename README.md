@@ -479,12 +479,24 @@ aws iam detach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 ![image](https://user-images.githubusercontent.com/25558369/181706181-603b6ba6-0877-4924-8698-0cf1883220bb.png)
 - 실습에 사용하였던 Security Group 2개를 제거합니다.
 ```
+cd ~/environment/Amazon-EKS-Security
+
 export VPC_ID=$(aws eks describe-cluster --name security-workshop --query "cluster.resourcesVpcConfig.vpcId" --output text)
 
 export REDIS_SG=$(aws ec2 describe-security-groups --filters Name=group-name,Values=Elasticache_Redis_SG Name=vpc-id,Values=${VPC_ID} --query "SecurityGroups[0].GroupId" --output text)
 
 export POD_SG=$(aws ec2 describe-security-groups --filters Name=group-name,Values=Cartservice_Pod_SG Name=vpc-id,Values=${VPC_ID} --query "SecurityGroups[0].GroupId" --output text)
+
+aws ec2 delete-security-group --group-id $REDIS_SG
+
+kubectl -n microservice delete -f sg-policy.yaml
+
+aws ec2 delete-security-group --group-id $POD_SG
 ```
+![image](https://user-images.githubusercontent.com/25558369/181784932-45162dc1-ff1f-492f-bf79-194cef94eab4.png)
+![image](https://user-images.githubusercontent.com/25558369/181785218-e8e6c338-5dbc-4cf4-b80b-6f01af7ae82b.png)
+
+
 - Amazon EKS Cluster를 삭제합니다.
 ```
 eksctl delete cluster --name security-workshop

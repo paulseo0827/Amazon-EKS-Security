@@ -268,7 +268,8 @@ kubectl -n microservice get pod
 
 
 10. Kubernetes Forensics
-- 
+- Pod에 해킹 의심이 있어서 분석이 필요할 때, Pod 
+- kube-forensics를 이용하면 클러스터 관리자가 실행 중인 Pod 및 모든 컨테이너의 현재 상태 정보를 덤프를 생성할 수 있고, 덤프 이용하여 보안 전문가가 포렌식 분석을 수행할 수 있습니다. kube-forensics 를 설치해서 microservice 에 cartservice pod 의 덤프를 생성하는 작업을 해보도록 하겠습니디ㅏ.
 ```
 cd ~/environment/Amazon-EKS-Security
 
@@ -279,15 +280,12 @@ cd kube-forensics
 make deploy
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181697351-89727a7d-37ef-4ff4-acdc-a7474bbd5a10.png)
-
-- 
+- kube-forensics에서 생성한 덤프를 저장하기 위해서 S3 bucket 를 생성합니다.
 ```
 aws s3 mb s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181698972-64ff54cc-28b9-4420-aa33-c91abd988853.png)
-
-
-- 
+- forensics_v1alpha1_podcheckpoint yaml 파일에 포렌식하고 하는 Pod 정보 (microservice namespace에 cartservice pod 가 대상입니다)와 덤프를 저장할 S3 버킷 정보를 입력하고 yaml 파일을 apply 합니다.
 ```
 vi config/samples/forensics_v1alpha1_podcheckpoint.yaml
 
@@ -300,16 +298,12 @@ kubectl apply -f ./config/samples/forensics_v1alpha1_podcheckpoint.yaml
 kubectl get -n forensics-system PodCheckpoint
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181699647-6adf0484-53f0-4e91-8d96-6bca58f867fc.png)
-
-
-- 
+- 덤프 생성이 제대로 되고 있는지 확인을 합니다.
 ```
 kubectl describe PodCheckpoint -n forensics-system podcheckpoint-sample
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181699721-c7f417b6-dd5b-416d-9b73-e3550498102d.png)
-
-
-- 
+- S3 버킷에 microservice namespace에 cartservice pod 의 덤프를 확인합니다.
 ```
 aws s3 ls s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID/forensics/ --recursive
 ```
@@ -321,9 +315,8 @@ aws s3 ls s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID/forensics/ --recursive
 
 
 12. OPA
-- 
-```
-```
+- 향후 지원 예정
+
 
 13. Network Policy
 - 향후 지원 예정

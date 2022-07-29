@@ -35,7 +35,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/emailservice:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/emailservice:v0.3.8
         ports:
         - containerPort: 8080
         env:
@@ -90,7 +90,7 @@ spec:
       serviceAccountName: default
       containers:
         - name: server
-          image: gcr.io/google-samples/microservices-demo/checkoutservice:v0.3.8
+          image: public.ecr.aws/hoseok/boutique/checkoutservice:v0.3.8
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -160,7 +160,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/recommendationservice:v0.3.8
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -221,7 +221,7 @@ spec:
       serviceAccountName: default
       containers:
         - name: server
-          image: gcr.io/google-samples/microservices-demo/frontend:v0.3.8
+          image: public.ecr.aws/hoseok/boutique/frontend:v0.3.8
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -320,7 +320,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/paymentservice:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/paymentservice:v0.3.8
         ports:
         - containerPort: 50051
         env:
@@ -376,7 +376,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/productcatalogservice:v0.3.8
         ports:
         - containerPort: 3550
         env:
@@ -436,7 +436,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/cartservice:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/cartservice:v0.3.8
         ports:
         - containerPort: 7070
         env:
@@ -509,7 +509,7 @@ spec:
           value: "frontend:80"
       containers:
       - name: main
-        image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/loadgenerator:v0.3.8
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -540,7 +540,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/currencyservice:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/currencyservice:v0.3.8
         ports:
         - name: grpc
           containerPort: 7000
@@ -596,7 +596,7 @@ spec:
       serviceAccountName: default
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/shippingservice:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/shippingservice:v0.3.8
         ports:
         - containerPort: 50051
         env:
@@ -708,7 +708,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/adservice:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/adservice:v0.3.8
         ports:
         - containerPort: 9555
         env:

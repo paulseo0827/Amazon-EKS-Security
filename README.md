@@ -453,9 +453,15 @@ aws elasticache delete-cache-cluster --cache-cluster-id redis-cart
 ![image](https://user-images.githubusercontent.com/25558369/181705026-59fb8ce5-cd10-46db-a703-bd8d8e6beb6e.png)
 
 
-- 
+- 실습에 사용하였던 IAM Policy 2개를 Worker Node IAM Role에서 제거합니다.
 ```
+ROLE_NAME=$(aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role)
+
+aws iam detach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+aws iam detach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonEKSVPCResourceController
 ```
+![image](https://user-images.githubusercontent.com/25558369/181706181-603b6ba6-0877-4924-8698-0cf1883220bb.png)
 
 
 - 
@@ -463,3 +469,10 @@ aws elasticache delete-cache-cluster --cache-cluster-id redis-cart
 ```
 
 
+- 
+```
+```
+
+- 
+```
+```

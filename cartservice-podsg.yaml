@@ -15,7 +15,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/cartservice:v0.3.8
+        image: public.ecr.aws/hoseok/boutique/cartservice:v0.3.8
         imagePullPolicy: Always
         ports:
         - containerPort: 7070

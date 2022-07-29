@@ -270,7 +270,42 @@ kubectl -n microservice get pod
 10. Kubernetes Forensics
 - 
 ```
+cd ~/environment/Amazon-EKS-Security
+
+git clone https://github.com/keikoproj/kube-forensics.git
+
+cd kube-forensics
+
+make deploy
 ```
+![image](https://user-images.githubusercontent.com/25558369/181697351-89727a7d-37ef-4ff4-acdc-a7474bbd5a10.png)
+
+
+- 
+```
+aws s3 mb s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID
+
+vi config/samples/forensics_v1alpha1_podcheckpoint.yaml
+
+s3 버킷 정보를 변경합니다.
+
+cat config/samples/forensics_v1alpha1_podcheckpoint.yaml
+
+kubectl apply -f ./config/samples/forensics_v1alpha1_podcheckpoint.yaml
+
+kubectl get -n forensics-system PodCheckpoint
+```
+![image](https://user-images.githubusercontent.com/25558369/181698111-8cb46f5b-140f-4c32-8c89-493193653707.png)
+
+- 
+```
+```
+
+
+- 
+```
+```
+
 
 11. Falco
 - 

@@ -422,10 +422,36 @@ kubectl -n microservice get svc frontend-external
 
 
 15. 자원 삭제
+- kube-forensics 에서 사용한 S3 버킷을 삭제합니다.
+```
+aws s3 rb s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID --force
+```
+![image](https://user-images.githubusercontent.com/25558369/181702336-093681be-c719-48fc-b9b5-7ab7007b0bfc.png)
+
+
 - 
 ```
 ```
 
+
+- 
+```
+```
+
+
+- 
+```
+```
+
+
+- 
+```
+```
+
+
+- 
+```
+```
 
 
 

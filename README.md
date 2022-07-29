@@ -259,7 +259,7 @@ kubectl -n polaris get svc
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181451540-97dc741d-4f99-40de-a6e7-67fad74b1cc4.png)
 - 하단에 microservice namespace에 cartservice 내용을 확인해봅니다. 
-![image](https://user-images.githubusercontent.com/25558369/181452008-66f7d628-50df-4c32-9cd7-aa2ce3323e94.png)
+![image](https://user-images.githubusercontent.com/25558369/181778578-dc4aa143-5857-41c9-9309-5f988ceb9b3c.png)
 - X로 표시되어 있는 부분을 체크표시로 되게 설정을 적용해보겠습니다.
 ```
 cd ~/environment/Amazon-EKS-Security/

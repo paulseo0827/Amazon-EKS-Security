@@ -1,0 +1,29 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: security-workshop
+  region: ap-northeast-2
+  version: "1.21"
+
+vpc:
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+
+managedNodeGroups:
+  - name: managed-ng01
+    instanceType: m5.large
+    minSize: 3
+    maxSize: 3
+    desiredCapacity: 3
+    volumeSize: 50
+    volumeType: gp3
+    volumeEncrypted: true
+    privateNetworking: true
+    ssh:
+      enableSsm: true
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["*"]

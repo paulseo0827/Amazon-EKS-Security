@@ -462,19 +462,30 @@ aws iam detach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 aws iam detach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:policy/AmazonEKSVPCResourceController
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181706181-603b6ba6-0877-4924-8698-0cf1883220bb.png)
+- 실습에 사용하였던 Security Group 2개를 제거합니다.
+```
+export VPC_ID=$(aws eks describe-cluster --name security-workshop --query "cluster.resourcesVpcConfig.vpcId" --output text)
 
+export REDIS_SG=$(aws ec2 describe-security-groups --filters Name=group-name,Values=Elasticache_Redis_SG Name=vpc-id,Values=${VPC_ID} --query "SecurityGroups[0].GroupId" --output text)
 
+export POD_SG=$(aws ec2 describe-security-groups --filters Name=group-name,Values=Cartservice_Pod_SG Name=vpc-id,Values=${VPC_ID} --query "SecurityGroups[0].GroupId" --output text)
+```
 - Amazon EKS Cluster를 삭제합니다.
 ```
 eksctl delete cluster --name security-workshop
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181708471-5432783e-cc4b-4565-a5c2-1b195a223bc8.png)
-
-
+- AWS Console에 CloudFormation으로 가서 EKS 관련 Template 이 삭제가 되었는지 확인합니다. 아래 화면과 같이 삭제가 안되면 강제로 삭제 작업을 수행합니다.
+![image](https://user-images.githubusercontent.com/25558369/181712127-1fad8f93-6810-4504-9e64-93c4a9b13bf9.png)
+![image](https://user-images.githubusercontent.com/25558369/181712174-f2d7e1d4-96af-493a-be14-fcb5f5670712.png)
+- VPC Console 에서 남아있는 VPC를 삭제합니다.
+![image](https://user-images.githubusercontent.com/25558369/181712390-d005372b-55b5-4cba-ad08-ab74488ede57.png)
+- Amazon EKS Cluster Log가 저장되어있는 CloudWatch Log group 를 삭제합니다. 
+```
+aws logs delete-log-group --log-group-name /aws/eks/security-workshop/cluster
+```
+![image](https://user-images.githubusercontent.com/25558369/181713097-f1fee776-7eb2-4fdc-924b-0022bb44506d.png)
 - 
 ```
 ```
 
-- 
-```
-```

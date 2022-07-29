@@ -14,7 +14,7 @@
 ![image](https://user-images.githubusercontent.com/25558369/181397575-b2b5e3ba-0ae1-474b-8e4e-917b03388dd1.png)
 
 
-2. 실습 환경 설정
+## 2. 실습 환경 설정
 - 아래 URL를 클릭하여 IAM Role를 생성합니다.
 
 https://console.aws.amazon.com/iam/home#/roles$new?step=review&commonUseCase=EC2%2BEC2&selectedUseCase=EC2&policies=arn:aws:iam::aws:policy%2FAdministratorAccess&roleName=eks-security-workshop-admin
@@ -49,7 +49,7 @@ cd Amazon-EKS-Security
 ![image](https://user-images.githubusercontent.com/25558369/181401440-f0a407bc-5a51-41a7-94b5-07ae172797c1.png)
 
 
-3. Amazon EKS Cluster 생성
+## 3. Amazon EKS Cluster 생성
 - eksctl 툴을 이용해서 Amzon EKS Cluster (Control Plane + Date Plane)를 생성합니다. 해당 작업은 약 20~30분정도 소요됩니다.
 ```
 eksctl create cluster -f eks-security-workshop.yaml
@@ -80,7 +80,7 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 ![image](https://user-images.githubusercontent.com/25558369/181413323-bbf88184-b8c0-4838-9f42-e9c791198417.png)
 
 
-4. Amazon GuardDuty 기능 활성화
+## 4. Amazon GuardDuty 기능 활성화
 - AWS Console의 Services에서 guardduty를 입력하고, 하단에 GuardDuty를 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181403056-c46c7afb-aaa8-442f-a492-61284be3a2c3.png)
 - "Get Started" 버튼을 선택합니.
@@ -89,7 +89,7 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 ![image](https://user-images.githubusercontent.com/25558369/181403145-26339e62-e5d8-4da4-a0c3-2e43eb4e67d7.png)
 
 
-5. Amazon Inspector 기능 활성화
+## 5. Amazon Inspector 기능 활성화
 - AWS Console의 Services에서 inspector 입력하고, 하단에 Inspector를 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181414179-b778fa06-cebd-4c78-ba7b-e581c1b51d58.png)
 - "Get Started" 버튼을 선택합니다.
@@ -98,7 +98,7 @@ aws iam attach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 ![image](https://user-images.githubusercontent.com/25558369/181414387-44339fbb-6ed8-42e0-9ff9-072e046046bb.png)
 
 
-6. Amazon ECR Container Image Scan 기능 테스트
+## 6. Amazon ECR Container Image Scan 기능 테스트
 - AWS에서 제공하는 Container Image scan 기능을 알아보도록 하겠습니다. 예제로는 2022년 3월말 Spring 프레임워크 취약점을 가지고 확인해보겠습니다. (https://www.ahnlab.com/kr/site/securityinfo/asec/asecView.do?groupLevel=001&groupCode=VNI002&seq=31635)
 - Spring 프레임워크 취약점을 테스트를 위해서 해당 git repo를 가져옵니다.
 ```
@@ -171,7 +171,7 @@ docker push $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com/spring4shell:latest
 ![image](https://user-images.githubusercontent.com/25558369/181420673-f22987d0-b608-43e9-9443-5040965b646b.png)
 
 
-7. Amazon GuardDuty로 EKS 보안 확인
+## 7. Amazon GuardDuty로 EKS 보안 확인
 - GuardDuty를 이용하여 EKS Audit Log를 기준으로 권한이나 보안 관련 문제들을 쉽게 찾을 수 있습니다.
 ```
 cd ~/environment/Amazon-EKS-Security/
@@ -192,7 +192,7 @@ https://catalog.workshops.aws/guardduty/en-US/module11/mod11-2-remediation
 https://docs.aws.amazon.com/ko_kr/guardduty/latest/ug/guardduty_finding-types-kubernetes.html
 
 
-8. Instance metadata 설정
+## 8. Instance metadata 설정
 - EC2를 생성할 때, 기본적으로 EC2 Instance Metadata Service(IMDS)를 v1 와 v2를 같이 상요할 수 있게 설정이 됩니다. EC2에서 curl명령어로 Instance Metadata에 접근이 가능하다면, Container가 올라가 있는 Pod에서도 접근이 가능합니다. 이 부분을 IMDSv2로 설정할 수 있는 실습을 하겠습니다. 우선 kube-system에 있는 restricted-namespace-pod pod에서 metadata 에 접근해서 IAM Role의 credentials(AccessKey, SecretAccessKey, Token) 정보를 가져오는 것을 확인합니다.
 ```
 aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role
@@ -236,7 +236,7 @@ exit
 https://docs.aws.amazon.com/config/latest/developerguide/ec2-imdsv2-check.html
 
 
-9. Amazon EKS에 배포된 워크로드가 문제가 없는지 Polaris By Fairwinds 를 이용하여 확인
+## 9. Amazon EKS에 배포된 워크로드가 문제가 없는지 Polaris By Fairwinds 를 이용하여 확인
 - Microservice 어플리케이션 배포를 한다.
 ```
 cd ~/environment/Amazon-EKS-Security/
@@ -271,7 +271,7 @@ kubectl -n microservice get pod
 ![image](https://user-images.githubusercontent.com/25558369/181457420-8f5e6688-69d3-42fe-b4f7-92a4c785fe2e.png)
 
 
-10. Kubernetes Forensics
+## 10. Kubernetes Forensics
 - Pod에 해킹 의심이 있어서 분석이 필요할 때, Pod 
 - kube-forensics를 이용하면 클러스터 관리자가 실행 중인 Pod 및 모든 컨테이너의 현재 상태 정보를 덤프를 생성할 수 있고, 덤프 이용하여 보안 전문가가 포렌식 분석을 수행할 수 있습니다. kube-forensics 를 설치해서 microservice 에 cartservice pod 의 덤프를 생성하는 작업을 해보도록 하겠습니디ㅏ.
 ```
@@ -314,19 +314,19 @@ aws s3 ls s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID/forensics/ --recursive
 ![image](https://user-images.githubusercontent.com/25558369/181699953-1ea6b6e8-9ad7-4a4f-bcec-a0acb34918f2.png)
 
 
-11. Falco
+## 11. Falco
 - 향후 지원 예정
 
 
-12. OPA
+## 12. OPA
 - 향후 지원 예정
 
 
-13. Network Policy
+## 13. Network Policy
 - 향후 지원 예정
 
 
-14. Pod Security Group
+## 14. Pod Security Group
 - microservice namespace에 배포된 Redis (redis-cart deployment)를 Elasticache Redis 로 변경 작업을 하면서, Redis 와 통신을 하는 Pod(cartservice)에 Pod Security Group 를 적용합니다. 먼저 Elasticache Redis 생성을 위해서 Security Group 생성 작업을 합니다.
 ```
 cd ~/environment/Amazon-EKS-Security/
@@ -425,7 +425,7 @@ kubectl -n microservice get svc frontend-external
 ![image](https://user-images.githubusercontent.com/25558369/181650827-ff30b99c-f3b7-4bb7-898b-208940056640.png)
 
 
-15. 자원 삭제
+## 15. 자원 삭제
 - kube-forensics 에서 사용한 S3 버킷을 삭제합니다.
 ```
 aws s3 rb s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID --force

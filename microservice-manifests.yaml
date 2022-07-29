@@ -430,7 +430,6 @@ spec:
       labels:
         app: cartservice
     spec:
-      hostNetwork: true
       hostPID: true
       hostIPC: true
       serviceAccountName: default

@@ -374,6 +374,8 @@ aws elasticache create-cache-cluster --cache-cluster-id redis-cart --cache-node-
 ![image](https://user-images.githubusercontent.com/25558369/181584985-547407a6-e133-4677-8b13-a86ed6bb3c80.png)
 - Pod Security Group 적용을 위해서, Worker Node IAM Role에 AmazonEKSVPCResourceController Policy 를 추가합니다. 그리고, CNI Plugin이 Pod의 ENI를 컨트롤 할 수 있도록 aws-node daemonset 에 설정 작업을 합니다.
 ```
+ROLE_NAME=$(aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role)
+
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEKSVPCResourceController --role-name ${ROLE_NAME}
 
 kubectl set env daemonset aws-node -n kube-system ENABLE_PREFIX_DELEGATION=true

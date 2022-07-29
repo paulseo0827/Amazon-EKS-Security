@@ -489,7 +489,17 @@ export POD_SG=$(aws ec2 describe-security-groups --filters Name=group-name,Value
 
 aws ec2 delete-security-group --group-id $REDIS_SG
 
+export NODE_GROUP_SG=$(aws ec2 describe-security-groups --filters Name=tag:Name,Values=eks-cluster-sg-security-workshop-* Name=vpc-id,Values=${VPC_ID} --query "SecurityGroups[0].GroupId" --output text)
+
+aws ec2 revoke-security-group-ingress --group-id ${NODE_GROUP_SG} --protocol tcp --port 53 --source-group ${POD_SG}
+
+aws ec2 revoke-security-group-ingress --group-id ${NODE_GROUP_SG} --protocol udp --port 53 --source-group ${POD_SG}
+
 kubectl -n microservice delete -f sg-policy.yaml
+
+kubectl -n microservice delete deploy cartservice
+
+약 5분정도 시간을 기다렸다가, 아래 명령어로 Pod Security Group 를 삭제를 합니다. 만약 삭제에 실패하면 5분정도 뒤에 다시 아래 명령어를 수행합니다.
 
 aws ec2 delete-security-group --group-id $POD_SG
 ```

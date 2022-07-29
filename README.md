@@ -468,6 +468,7 @@ aws iam detach-role-policy --role-name $ROLE_NAME --policy-arn arn:aws:iam::aws:
 ```
 eksctl delete cluster --name security-workshop
 ```
+![image](https://user-images.githubusercontent.com/25558369/181708471-5432783e-cc4b-4565-a5c2-1b195a223bc8.png)
 
 
 - 

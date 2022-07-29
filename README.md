@@ -308,9 +308,8 @@ kubectl get -n forensics-system PodCheckpoint
 
 
 11. Falco
-- 
-```
-```
+- 향후 지원 예정
+
 
 12. OPA
 - 

@@ -208,22 +208,16 @@ exit
 ![image](https://user-images.githubusercontent.com/25558369/181430433-7d538392-9612-4aec-a504-cde343b63b85.png)
 - IMDS에 접근하는 설정을 v2로 하기 위해서, 인스턴스 리스트 확인과 각 인스턴스에 HttpTokens 설정이 optional(v1 or v2 동시 사용가능) 인 것을 확인합니다.
 ```
-aws ec2 describe-instances | jq -r '.Reservations[].Instances[].InstanceId'
+INSTANCE_ID=$(aws ec2 describe-instances | jq -r '.Reservations[].Instances[].InstanceId')
 
-aws ec2 describe-instances --instance-ids i-0eace57965836216d | jq -r '.Reservations[].Instances[].MetadataOptions'
+aws ec2 describe-instances --instance-ids $INSTANCE_ID | jq -r '.Reservations[].Instances[].MetadataOptions'
 ```
-![image](https://user-images.githubusercontent.com/25558369/181432810-01c23a01-461e-45ba-9969-de8bd1dd71e9.png)
+![image](https://user-images.githubusercontent.com/25558369/181775935-694aad1f-9114-4d28-b736-d7ae3031148f.png)
 - 각각 인스턴스의 HttoTokens 정보를 required (IDMSv2)로 변경을 합니다.
 ```
-aws ec2 modify-instance-metadata-options --instance-id i-0eace57965836216d --http-tokens required --http-endpoint enabled
-
-aws ec2 modify-instance-metadata-options --instance-id i-0e2b6b09c4343b45e --http-tokens required --http-endpoint enabled
-
-aws ec2 modify-instance-metadata-options --instance-id i-0b8e95d29144ac592 --http-tokens required --http-endpoint enabled
-
-aws ec2 modify-instance-metadata-options --instance-id i-07df9bf65fe7a8200 --http-tokens required --http-endpoint enabled 
+for i in $INSTANCE_ID; do aws ec2 modify-instance-metadata-options --instance-id $i --http-tokens required --http-endpoint enabled; done
 ```
-![image](https://user-images.githubusercontent.com/25558369/181433223-fb4c6c11-6e5a-449f-853f-5f6c7bae1d9c.png)
+![image](https://user-images.githubusercontent.com/25558369/181776570-a4165c38-6b35-4118-8aaf-5741adfb6252.png)
 - 변경 후, kube-system의 restricted-namespace-pod pod에 접속하여, metadata 호출이 안되는지 확인을 합니다.
 ```
 aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-nodegroup-managed-ng01 | jq -r '.StackResourceSummaries[].PhysicalResourceId' | grep Role

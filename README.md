@@ -202,6 +202,8 @@ aws cloudformation  list-stack-resources --stack-name eksctl-security-workshop-n
 kubectl -n kube-system exec -it restricted-namespace-pod -- /bin/sh
 
 curl http://169.254.169.254/latest/meta-data/iam/security-credentials/eksctl-security-workshop-nodegrou-NodeInstanceRole-QBU9FVSOHZEQ
+
+exit
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181430433-7d538392-9612-4aec-a504-cde343b63b85.png)
 - IMDS에 접근하는 설정을 v2로 하기 위해서, 인스턴스 리스트 확인과 각 인스턴스에 HttpTokens 설정이 optional(v1 or v2 동시 사용가능) 인 것을 확인합니다.

@@ -280,14 +280,18 @@ make deploy
 ```
 ![image](https://user-images.githubusercontent.com/25558369/181697351-89727a7d-37ef-4ff4-acdc-a7474bbd5a10.png)
 
-
 - 
 ```
 aws s3 mb s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID
+```
+![image](https://user-images.githubusercontent.com/25558369/181698972-64ff54cc-28b9-4420-aa33-c91abd988853.png)
 
+
+- 
+```
 vi config/samples/forensics_v1alpha1_podcheckpoint.yaml
 
-s3 버킷 정보를 변경합니다.
+Forensics 대상의 Pod 이름과 Namespace 정보를 수정하고, Forensics 정보가 저장 될 s3 버킷 정보를 변경합니다.
 
 cat config/samples/forensics_v1alpha1_podcheckpoint.yaml
 
@@ -295,16 +299,21 @@ kubectl apply -f ./config/samples/forensics_v1alpha1_podcheckpoint.yaml
 
 kubectl get -n forensics-system PodCheckpoint
 ```
-![image](https://user-images.githubusercontent.com/25558369/181698111-8cb46f5b-140f-4c32-8c89-493193653707.png)
-
-- 
-```
-```
+![image](https://user-images.githubusercontent.com/25558369/181699647-6adf0484-53f0-4e91-8d96-6bca58f867fc.png)
 
 
 - 
 ```
+kubectl describe PodCheckpoint -n forensics-system podcheckpoint-sample
 ```
+![image](https://user-images.githubusercontent.com/25558369/181699721-c7f417b6-dd5b-416d-9b73-e3550498102d.png)
+
+
+- 
+```
+aws s3 ls s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID/forensics/ --recursive
+```
+![image](https://user-images.githubusercontent.com/25558369/181699953-1ea6b6e8-9ad7-4a4f-bcec-a0acb34918f2.png)
 
 
 11. Falco

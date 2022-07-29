@@ -387,6 +387,10 @@ kubectl -n kube-system rollout status ds aws-node
 ![image](https://user-images.githubusercontent.com/25558369/181587870-5a9026a5-985f-4e99-b968-022dfb246272.png)
 - cartservice Deployment (Pod)에 Security Group Policy 적용을 위한 yaml 파일을 생성합니다.
 ```
+export VPC_ID=$(aws eks describe-cluster --name security-workshop --query "cluster.resourcesVpcConfig.vpcId" --output text)
+
+export POD_SG=$(aws ec2 describe-security-groups --filters Name=group-name,Values=Cartservice_Pod_SG Name=vpc-id,Values=${VPC_ID} --query "SecurityGroups[0].GroupId" --output text)
+
 cat << EoF > ~/environment/Amazon-EKS-Security/sg-policy.yaml
 apiVersion: vpcresources.k8s.aws/v1beta1
 kind: SecurityGroupPolicy

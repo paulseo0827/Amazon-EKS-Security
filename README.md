@@ -131,6 +131,8 @@ aws ecr put-registry-scanning-configuration --scan-type BASIC
 ![image](https://user-images.githubusercontent.com/25558369/181417712-838b4d33-b062-4cf4-9f3f-af0d97bcea45.png)
 - 위에 빌드한 이미지를 ECR에 저장하기 위해서 repository 를 생성하고, ECR login를 합니다.
 ```
+. ~/.bash_profile
+
 aws ecr create-repository --repository-name spring4shell --image-scanning-configuration scanOnPush=true
 
 aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.ap-northeast-2.amazonaws.com 

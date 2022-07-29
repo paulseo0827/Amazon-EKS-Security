@@ -1,7 +1,7 @@
 # Amazon-EKS-Security
 
 
-1. AWS Cloud9 기동
+## 1. AWS Cloud9 기동
 - AWS Console의 Services에서 Cloud9를 입력하고, 하단에 Cloud9를 선택합니다.
 ![image](https://user-images.githubusercontent.com/25558369/181396773-09cf60b0-3990-4c80-a9a5-695835e30e95.png)
 - "Create environment"를 선택합니다.

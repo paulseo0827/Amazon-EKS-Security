@@ -429,9 +429,14 @@ aws s3 rb s3://kube-forensics-$AWS_REGION-$ACCOUNT_ID --force
 ![image](https://user-images.githubusercontent.com/25558369/181702336-093681be-c719-48fc-b9b5-7ab7007b0bfc.png)
 
 
-- 
+- GuardDuty 를 중지합니다. 명령어 수행 이후, AWS Console 에 GuardDuty 에 아래와 같은 화면이 뜨는지 확인합니다.
 ```
+GUARDDUTY_DETECTORID=$(aws guardduty list-detectors | jq -r '.DetectorIds[]')
+
+aws guardduty delete-detector --detector-id $GUARDDUTY_DETECTORID
+
 ```
+![image](https://user-images.githubusercontent.com/25558369/181703131-0eb2a552-287e-46dc-bc6b-ec11234e0228.png)
 
 
 - 
